@@ -10,8 +10,4 @@
     <ProjectReference Include="..\StarbuckClone.Domain\StarbuckClone.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCases\Queries\" />
-  </ItemGroup>
-
 </Project>

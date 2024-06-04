@@ -1,9 +1,11 @@
 using StarbuckClone.Implementation;
 using StarbuckClone.Implementation.UseCases.Commands.Users;
 using StarbuckClone.Implementation.UseCases.Logging;
+using StarbuckClone.Implementation.UseCases.Queries.AuditLogs;
 using StarbuckClone.Implementation.Validators;
 using StarbucksClone.Application;
 using StarbucksClone.Application.UseCases.Commands.Users;
+using StarbucksClone.Application.UseCases.Queries.AuditLogs;
 using StarbucksClone.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,7 @@ builder.Services.AddTransient<RegisterUserDtoValidator>();
 builder.Services.AddTransient<IRegisterUserCommand, EFRegisterUserCommand>();
 builder.Services.AddTransient<IUseCaseLogger, DBUseCaseLogger>();
 builder.Services.AddTransient<UseCaseHandler>();
+builder.Services.AddTransient<ISearchAuditLogsQuery, EFSearchAuditLogs>();
 
 var app = builder.Build();
 

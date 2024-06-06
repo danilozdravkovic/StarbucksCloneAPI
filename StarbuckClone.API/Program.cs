@@ -1,11 +1,13 @@
 using StarbuckClone.Implementation;
 using StarbuckClone.Implementation.UseCases.Commands.ProductCategories;
+using StarbuckClone.Implementation.UseCases.Commands.Products;
 using StarbuckClone.Implementation.UseCases.Commands.Users;
 using StarbuckClone.Implementation.UseCases.Logging;
 using StarbuckClone.Implementation.UseCases.Queries.AuditLogs;
 using StarbuckClone.Implementation.Validators;
 using StarbucksClone.Application;
 using StarbucksClone.Application.UseCases.Commands.ProductCategories;
+using StarbucksClone.Application.UseCases.Commands.Products;
 using StarbucksClone.Application.UseCases.Commands.Users;
 using StarbucksClone.Application.UseCases.Queries.AuditLogs;
 using StarbucksClone.DataAccess;
@@ -24,8 +26,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<SCContext>();
 builder.Services.AddTransient<RegisterUserDtoValidator>();
 builder.Services.AddTransient<CreateProductCategoryDtoValidator>();
+builder.Services.AddTransient<UpdateUserAccessDtoValidator>();
+builder.Services.AddTransient<CreateProductDtoValidator>();
 builder.Services.AddTransient<IRegisterUserCommand, EFRegisterUserCommand>();
 builder.Services.AddTransient<ICreateProductCategoryCommand, EFCreateProductCategoryCommand>();
+builder.Services.AddTransient<IUpdateUserAccessCommand, EFUpdateUserAccessCommand>();
+builder.Services.AddTransient<ICreateProductCommand, EFCreateProduct>();
 builder.Services.AddTransient<IUseCaseLogger, DBUseCaseLogger>();
 builder.Services.AddTransient<UseCaseHandler>();
 builder.Services.AddTransient<ISearchAuditLogsQuery, EFSearchAuditLogs>();
@@ -65,5 +71,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseStaticFiles();
 
 app.Run();

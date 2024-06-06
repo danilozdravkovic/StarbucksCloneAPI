@@ -61,9 +61,31 @@ namespace StarbuckClone.API.Controllers
         }
 
         // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{id}/access")]
+        public IActionResult ChangeAccess(int id, [FromBody] UpdateUserAccessDto dto,IUpdateUserAccessCommand cmd)
         {
+            try
+            {
+                dto.UserId = id;
+                _commandHandler.HandleCommand(cmd, dto);
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                return UnprocessableEntity(ex.Errors.Select(x => new
+                {
+                    Error = x.ErrorMessage,
+                    Property = x.PropertyName
+                }));
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Server error occured, please contact support" });
+            }
         }
 
         // DELETE api/<UsersController>/5

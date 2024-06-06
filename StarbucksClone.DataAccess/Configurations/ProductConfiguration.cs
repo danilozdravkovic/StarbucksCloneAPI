@@ -12,7 +12,8 @@ namespace StarbucksClone.DataAccess.Configurations
     {
         protected override void ConfigureEntity(EntityTypeBuilder<Product> builder)
         {
-            builder.Property(x => x.ImageSrc).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.ImageSrc).IsRequired();
+   
             builder.Property(x => x.Name)
                    .HasMaxLength(50)
                    .IsRequired();

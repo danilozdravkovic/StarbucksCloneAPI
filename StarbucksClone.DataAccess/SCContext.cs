@@ -38,12 +38,15 @@ namespace StarbucksClone.DataAccess
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<CartLine>().Property(x => x.SizeVolume).IsRequired().HasMaxLength(20);
+            modelBuilder.Entity<CartLine>().Property(x => x.Price).IsRequired();
 
             modelBuilder.Entity<CartLinesAddIn>().Property(x => x.AddIn).IsRequired().HasMaxLength(40);
 
             modelBuilder.Entity<Order>().Property(x => x.Address).IsRequired().HasMaxLength(60);
+            modelBuilder.Entity<Order>().Property(x => x.TotalPrice).IsRequired();
 
             modelBuilder.Entity<OrderLine>().Property(x => x.SizeVolume).IsRequired().HasMaxLength(20);
+            modelBuilder.Entity<OrderLine>().Property(x => x.Price).IsRequired();
 
             modelBuilder.Entity<OrderLineAddIn>().Property(x => x.AddIn).IsRequired().HasMaxLength(40);
 

@@ -52,6 +52,21 @@ namespace StarbucksClone.DataAccess
 
             modelBuilder.Entity<UseCasesAuditLog>().Property(x => x.Username).IsRequired().HasMaxLength(20);
             modelBuilder.Entity<UseCasesAuditLog>().Property(x => x.UseCaseName).IsRequired().HasMaxLength(50);
+
+            modelBuilder.Entity<Role>().Property(x => x.Name).IsRequired().HasMaxLength(30);
+            modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
+
+            modelBuilder.Entity<UserUseCase>().HasKey(x => new
+            {
+                x.UserId,
+                x.UseCaseId
+            });
+
+            modelBuilder.Entity<RoleUseCase>().HasKey(x => new
+            {
+                x.RoleId,
+                x.UseCaseId
+            });
         }
 
         public override int SaveChanges()
@@ -92,5 +107,9 @@ namespace StarbucksClone.DataAccess
         public DbSet<NavigationLink> NavigationLinks { get; set; }
         public DbSet<LinkPosition> LinkPositions { get; set; }
         public DbSet<UseCasesAuditLog> UseCasesAuditLogs { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserUseCase> UserUseCases { get; set; }
+        public DbSet<RoleUseCase> RoleUseCases { get; set; }
+
     }
 }

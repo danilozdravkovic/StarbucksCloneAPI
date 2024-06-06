@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using StarbuckClone.Domain;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace StarbucksClone.DataAccess.Configurations
             builder.Property(x => x.Password)
                    .IsRequired()
                    .HasMaxLength(120);
+
+           
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StarbucksClone.DataAccess;
 
@@ -11,9 +12,11 @@ using StarbucksClone.DataAccess;
 namespace StarbucksClone.DataAccess.Migrations
 {
     [DbContext(typeof(SCContext))]
-    partial class SCContextModelSnapshot : ModelSnapshot
+    [Migration("20240606090004_AddRoleIdToUsersTable")]
+    partial class AddRoleIdToUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -448,52 +451,6 @@ namespace StarbucksClone.DataAccess.Migrations
                     b.ToTable("ProductCategories");
                 });
 
-            modelBuilder.Entity("StarbuckClone.Domain.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("isDefault")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("StarbuckClone.Domain.RoleUseCase", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UseCaseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoleId", "UseCaseId");
-
-                    b.ToTable("RoleUseCases");
-                });
-
             modelBuilder.Entity("StarbuckClone.Domain.Size", b =>
                 {
                     b.Property<int>("Id")
@@ -614,27 +571,12 @@ namespace StarbucksClone.DataAccess.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("RoleId");
-
                     b.HasIndex("Username")
                         .IsUnique();
 
                     b.HasIndex("FirstName", "LastName", "Email", "Username");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("StarbuckClone.Domain.UserUseCase", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UseCaseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "UseCaseId");
-
-                    b.ToTable("UserUseCases");
                 });
 
             modelBuilder.Entity("ProductsCustomAddIns", b =>
@@ -799,39 +741,6 @@ namespace StarbucksClone.DataAccess.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("StarbuckClone.Domain.RoleUseCase", b =>
-                {
-                    b.HasOne("StarbuckClone.Domain.Role", "Role")
-                        .WithMany("UseCases")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("StarbuckClone.Domain.User", b =>
-                {
-                    b.HasOne("StarbuckClone.Domain.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("StarbuckClone.Domain.UserUseCase", b =>
-                {
-                    b.HasOne("StarbuckClone.Domain.User", "User")
-                        .WithMany("UseCases")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("StarbuckClone.Domain.AddIn", b =>
                 {
                     b.Navigation("Children");
@@ -876,20 +785,11 @@ namespace StarbucksClone.DataAccess.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("StarbuckClone.Domain.Role", b =>
-                {
-                    b.Navigation("UseCases");
-
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("StarbuckClone.Domain.User", b =>
                 {
                     b.Navigation("OrderLines");
 
                     b.Navigation("Orders");
-
-                    b.Navigation("UseCases");
                 });
 #pragma warning restore 612, 618
         }

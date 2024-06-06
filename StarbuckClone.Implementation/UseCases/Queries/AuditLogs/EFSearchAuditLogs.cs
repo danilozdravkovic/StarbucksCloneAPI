@@ -23,7 +23,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.AuditLogs
             _context = context;
         }
 
-        public IEnumerable<AuditLogDto> Execute(AuditLogSearchDto search)
+        public PagedResponse<AuditLogDto> Execute(AuditLogSearchDto search)
         {
             IQueryable<UseCasesAuditLog> query = _context.UseCasesAuditLogs.AsQueryable();
 
@@ -46,16 +46,28 @@ namespace StarbuckClone.Implementation.UseCases.Queries.AuditLogs
             {
                 query = query.Where(x => x.ExecutedAt < search.DateTo);
             }
+            int totalCount = query.Count();
 
-            IEnumerable<AuditLogDto> data = query.Select(x => new AuditLogDto
+            int perPage = search.PerPage.HasValue ? (int)Math.Abs((double)search.PerPage) : 10;
+            int page = search.Page.HasValue ? (int)Math.Abs((double)search.Page) : 1;
+            int skip = perPage * (page - 1);
+            query = query.Skip(skip).Take(perPage);
+
+            return new PagedResponse<AuditLogDto>
             {
-                Username=x.Username,
-                UseCaseName=x.UseCaseName,
-                ExecutedAt=x.ExecutedAt,
-                Data=x.Data
-            }).ToList();
+                CurrentPage = page,
+                Data = query.Select(x => new AuditLogDto
+                {
+                    Username = x.Username,
+                    UseCaseName = x.UseCaseName,
+                    ExecutedAt = x.ExecutedAt,
+                    Data = x.Data
+                }).ToList(),
+                PerPage = perPage,
+                TotalCount = totalCount
+        };
 
-            return data;
+          
             
         }
     }

@@ -14,22 +14,17 @@ namespace StarbuckClone.Implementation
     public class UseCaseHandler
     {
         private readonly IUseCaseLogger _logger;
+        private readonly IApplicationActor _actor;
 
-        public UseCaseHandler(IUseCaseLogger logger)
+        public UseCaseHandler(IUseCaseLogger logger, IApplicationActor actor)
         {
             _logger = logger;
+            _actor = actor;
         }
 
         public void HandleCommand<TData>(ICommand<TData> command,TData data)
         {
-            UseCaseLog log = new UseCaseLog
-            {
-                UseCaseData = data,
-                UseCaseName = command.Name,
-                Username = "Test"
-            };
-
-            _logger.Log(log);
+            HandleCrossCuttingConcerns(command, data);
 
             command.Execute(data);
         }
@@ -37,18 +32,28 @@ namespace StarbuckClone.Implementation
         public TResult HandleQuery<TResult, TSearch>(IQuery<TResult, TSearch> query, TSearch search)
             where TResult : class
         {
-            UseCaseLog log = new UseCaseLog
-            {
-                UseCaseData = search,
-                UseCaseName = query.Name,
-                Username = "Test"
-            };
-
-            _logger.Log(log);
+            HandleCrossCuttingConcerns(query, search);
 
             var result = query.Execute(search);
 
             return result;
+        }
+
+        private void HandleCrossCuttingConcerns(IUseCase useCase, object data)
+        {
+            if (!_actor.AllowedUseCases.Contains(useCase.Id))
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            var log = new UseCaseLog
+            {
+                UseCaseData = data,
+                UseCaseName = useCase.Name,
+                Username = _actor.Username,
+            };
+
+            _logger.Log(log);
         }
     }
 }

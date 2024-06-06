@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarbucksClone.Application.UseCases.Queries.AuditLogs
+namespace StarbucksClone.Application.UseCases.Commands.ProductCategories
 {
-    public interface ISearchAuditLogsQuery : IQuery<PagedResponse<AuditLogDto>, AuditLogSearchDto>
+    public interface ICreateProductCategoryCommand : ICommand<CreateProductCategoryDto>
     {
     }
 }

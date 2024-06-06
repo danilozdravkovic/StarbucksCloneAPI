@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
-using StarbucksClone.Application.UseCases.Commands.Users;
+using StarbucksClone.Application.UseCases.Commands.ProductCategories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,36 +10,35 @@ namespace StarbuckClone.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class ProductCategoriesController : ControllerBase
     {
         private UseCaseHandler _commandHandler;
 
-        public UsersController(UseCaseHandler commandHandler)
+        public ProductCategoriesController(UseCaseHandler commandHandler)
         {
             _commandHandler = commandHandler;
         }
-        // GET: api/<UsersController>
+        // GET: api/<ProductCategoriesController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<UsersController>/5
+        // GET api/<ProductCategoriesController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<UsersController>
+        // POST api/<ProductCategoriesController>
         [HttpPost]
-        public IActionResult Post([FromBody] RegisterUserDto dto, [FromServices] IRegisterUserCommand cmd)
+        public IActionResult Post([FromBody] CreateProductCategoryDto dto, [FromServices] ICreateProductCategoryCommand command)
         {
             try
             {
-                _commandHandler.HandleCommand(cmd, dto);
-
+                _commandHandler.HandleCommand(command, dto);
                 return StatusCode(201);
             }
             catch (ValidationException ex)
@@ -60,13 +59,13 @@ namespace StarbuckClone.API.Controllers
             }
         }
 
-        // PUT api/<UsersController>/5
+        // PUT api/<ProductCategoriesController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<UsersController>/5
+        // DELETE api/<ProductCategoriesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

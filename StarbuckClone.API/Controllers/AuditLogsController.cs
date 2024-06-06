@@ -27,6 +27,10 @@ namespace StarbuckClone.API.Controllers
 
                 return Ok(result);
             }
+            catch(UnauthorizedAccessException ex)
+            {
+                return Unauthorized();
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "Server error occured, please contact support" });

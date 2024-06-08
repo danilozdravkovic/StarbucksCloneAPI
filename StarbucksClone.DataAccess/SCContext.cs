@@ -111,6 +111,7 @@ namespace StarbucksClone.DataAccess
         public DbSet<LinkPosition> LinkPositions { get; set; }
         public DbSet<UseCasesAuditLog> UseCasesAuditLogs { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<AddIn> AddIns { get; set; }
         public DbSet<UserUseCase> UserUseCases { get; set; }
         public DbSet<RoleUseCase> RoleUseCases { get; set; }
 

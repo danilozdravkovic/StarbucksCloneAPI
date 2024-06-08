@@ -12,6 +12,7 @@ namespace StarbuckClone.Domain
         public string Name { get; set; }
         public int Calories { get; set; }
         public int CategoryId { get; set; }
+        public decimal InitialPrice { get; set; }
 
         public virtual ProductCategory Category { get; set; }
         public virtual ICollection<Size> Sizes { get; set; } = new HashSet<Size>();

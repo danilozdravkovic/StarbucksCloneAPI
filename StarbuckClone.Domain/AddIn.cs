@@ -10,6 +10,7 @@ namespace StarbuckClone.Domain
     {
         public string Name { get; set; }
         public int? ParentId { get; set; }
+        public decimal Price { get; set; }
 
         public virtual AddIn Parent { get; set; }
         public virtual ICollection<AddIn> Children { get; set; } = new HashSet<AddIn>();

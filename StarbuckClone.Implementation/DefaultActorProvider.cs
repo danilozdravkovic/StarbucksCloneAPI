@@ -15,10 +15,10 @@ namespace StarbuckClone.Implementation
             {
                 Username = "test",
                 Email = "test",
-                Id = 0,
+                Id = 9,
                 FirstName = "Test",
                 LastName = "Test",
-                AllowedUseCases = new List<int> { 1,2,3,4,5,6,7}
+                AllowedUseCases = new List<int> { 1,2,3,4,5,6,7,8}
             };
         }
     }

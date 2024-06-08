@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace StarbuckClone.Domain
 {
-    public class CartLine : Entity
+    public class CartLine 
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
         public int ProductId { get; set; }
         public string SizeVolume { get; set; }

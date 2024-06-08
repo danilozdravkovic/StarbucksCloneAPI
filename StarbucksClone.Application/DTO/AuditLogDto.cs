@@ -16,8 +16,8 @@ namespace StarbucksClone.Application.DTO
 
     public class AuditLogSearchDto : PagedSearchDto
     {
-        public string? Username { get; set; }
-        public string? UseCaseName { get; set; }
+        public string Username { get; set; }
+        public string UseCaseName { get; set; }
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
     }

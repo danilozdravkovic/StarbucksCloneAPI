@@ -1,4 +1,5 @@
 ﻿using StarbuckClone.Domain;
+using StarbuckClone.Implementation.Extensions;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Queries.AuditLogs;
 using StarbucksClone.DataAccess;
@@ -46,25 +47,21 @@ namespace StarbuckClone.Implementation.UseCases.Queries.AuditLogs
             {
                 query = query.Where(x => x.ExecutedAt < search.DateTo);
             }
-            int totalCount = query.Count();
 
-            int perPage = search.PerPage.HasValue ? (int)Math.Abs((double)search.PerPage) : 10;
-            int page = search.Page.HasValue ? (int)Math.Abs((double)search.Page) : 1;
-            int skip = perPage * (page - 1);
-            query = query.Skip(skip).Take(perPage);
+            var paginatedResult = query.AddPagination(search.Page, search.PerPage);
 
             return new PagedResponse<AuditLogDto>
             {
-                CurrentPage = page,
-                Data = query.Select(x => new AuditLogDto
+                CurrentPage = paginatedResult.CurrentPage,
+                Data = paginatedResult.Data.Select(x => new AuditLogDto
                 {
                     Username = x.Username,
                     UseCaseName = x.UseCaseName,
                     ExecutedAt = x.ExecutedAt,
                     Data = x.Data
-                }).ToList(),
-                PerPage = perPage,
-                TotalCount = totalCount
+                }),
+                PerPage = paginatedResult.PerPage,
+                TotalCount = paginatedResult.TotalCount
         };
 
           

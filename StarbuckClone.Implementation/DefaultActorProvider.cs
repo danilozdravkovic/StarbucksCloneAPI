@@ -18,7 +18,7 @@ namespace StarbuckClone.Implementation
                 Id = 0,
                 FirstName = "Test",
                 LastName = "Test",
-                AllowedUseCases = new List<int> { 1,2,3,4,5}
+                AllowedUseCases = new List<int> { 1,2,3,4,5,6,7}
             };
         }
     }

@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace StarbuckClone.Implementation.UseCases.Commands.Products
 {
-    public class EFCreateProduct : ICreateProductCommand
+    public class EFCreateProductCommand : ICreateProductCommand
     {
         private SCContext _context;
         private CreateProductDtoValidator _validator;
 
-        public EFCreateProduct(SCContext context, CreateProductDtoValidator validator)
+        public EFCreateProductCommand(SCContext context, CreateProductDtoValidator validator)
         {
             _context = context;
             _validator = validator;

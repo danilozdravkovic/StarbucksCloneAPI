@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Commands.ProductCategories;
+using StarbucksClone.Application.UseCases.Queries.ProductCategories;
+using StarbucksClone.Application.UseCases.Queries.Users;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,9 +22,29 @@ namespace StarbuckClone.API.Controllers
         }
         // GET: api/<ProductCategoriesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromQuery] ProductCategorySearchDto search, [FromServices] ISearchProductCategoriesQuery query)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var result = _commandHandler.HandleQuery(query, search);
+                return Ok(result);
+            }
+            catch (ValidationException ex)
+            {
+                return UnprocessableEntity(ex.Errors.Select(x => new
+                {
+                    Error = x.ErrorMessage,
+                    Property = x.PropertyName
+                }));
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Server error occured, please contact support" });
+            }
         }
 
         // GET api/<ProductCategoriesController>/5

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarbuckClone.Implementation.UseCases.Logging
+namespace StarbuckClone.Implementation.Logging
 {
     public class DBUseCaseLogger : IUseCaseLogger
     {
@@ -21,17 +21,17 @@ namespace StarbuckClone.Implementation.UseCases.Logging
 
         public void Log(UseCaseLog log)
         {
-                UseCasesAuditLog auditLog = new UseCasesAuditLog
-                {
-                    UseCaseName = log.UseCaseName,
-                    Data = JsonConvert.SerializeObject(log.UseCaseData),
-                    Username = log.Username,
-                    ExecutedAt = DateTime.UtcNow
-                };
+            UseCasesAuditLog auditLog = new UseCasesAuditLog
+            {
+                UseCaseName = log.UseCaseName,
+                Data = JsonConvert.SerializeObject(log.UseCaseData),
+                Username = log.Username,
+                ExecutedAt = DateTime.UtcNow
+            };
 
-                _context.UseCasesAuditLogs.Add(auditLog);
-                _context.SaveChanges();
-           
+            _context.UseCasesAuditLogs.Add(auditLog);
+            _context.SaveChanges();
+
         }
     }
 }

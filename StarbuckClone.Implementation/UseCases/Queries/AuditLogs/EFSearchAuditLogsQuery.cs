@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace StarbuckClone.Implementation.UseCases.Queries.AuditLogs
 {
-    public class EFSearchAuditLogs : ISearchAuditLogsQuery
+    public class EFSearchAuditLogsQuery : ISearchAuditLogsQuery
     {
         public int Id => 2;
 
@@ -19,7 +19,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.AuditLogs
 
         public readonly SCContext _context;
 
-        public EFSearchAuditLogs(SCContext context)
+        public EFSearchAuditLogsQuery(SCContext context)
         {
             _context = context;
         }

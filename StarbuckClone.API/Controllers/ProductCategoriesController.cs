@@ -24,27 +24,8 @@ namespace StarbuckClone.API.Controllers
         [HttpGet]
         public IActionResult Get([FromQuery] ProductCategorySearchDto search, [FromServices] ISearchProductCategoriesQuery query)
         {
-            try
-            {
                 var result = _commandHandler.HandleQuery(query, search);
                 return Ok(result);
-            }
-            catch (ValidationException ex)
-            {
-                return UnprocessableEntity(ex.Errors.Select(x => new
-                {
-                    Error = x.ErrorMessage,
-                    Property = x.PropertyName
-                }));
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Server error occured, please contact support" });
-            }
         }
 
         // GET api/<ProductCategoriesController>/5
@@ -58,27 +39,9 @@ namespace StarbuckClone.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateProductCategoryDto dto, [FromServices] ICreateProductCategoryCommand command)
         {
-            try
-            {
                 _commandHandler.HandleCommand(command, dto);
                 return StatusCode(201);
-            }
-            catch (ValidationException ex)
-            {
-                return UnprocessableEntity(ex.Errors.Select(x => new
-                {
-                    Error = x.ErrorMessage,
-                    Property = x.PropertyName
-                }));
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Server error occured, please contact support" });
-            }
+    
         }
 
         // PUT api/<ProductCategoriesController>/5

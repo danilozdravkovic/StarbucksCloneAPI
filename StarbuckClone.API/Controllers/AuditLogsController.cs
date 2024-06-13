@@ -19,24 +19,13 @@ namespace StarbuckClone.API.Controllers
             _commandHandler = commandHandler;
         }
         // GET: api/<AuditLogsController>
-        [Authorize]
+        
         [HttpGet]
         public IActionResult Get([FromQuery] AuditLogSearchDto search , [FromServices] ISearchAuditLogsQuery query)
         {
-            try
-            {
                 var result=_commandHandler.HandleQuery(query, search);
 
                 return Ok(result);
-            }
-            catch(UnauthorizedAccessException ex)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Server error occured, please contact support" });
-            }
         }
 
         // GET api/<AuditLogsController>/5

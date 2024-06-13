@@ -63,83 +63,31 @@ namespace StarbuckClone.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] RegisterUserDto dto, [FromServices] IRegisterUserCommand cmd)
         {
-            try
-            {
                 _commandHandler.HandleCommand(cmd, dto);
 
                 return StatusCode(201);
-            }
-            catch (ValidationException ex)
-            {
-                return UnprocessableEntity(ex.Errors.Select(x => new
-                {
-                    Error = x.ErrorMessage,
-                    Property = x.PropertyName
-                }));
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Server error occured, please contact support" });
-            }
+        
         }
 
         [HttpPost("signin")]
         public IActionResult SignIn([FromBody] AuthRequest request)
         {
-            try
-            {
+           
                 string token = _tokenCreator.Create(request.Email, request.Password);
 
                 return Ok(new AuthResponse { Token = token });
-            }
-            catch (ValidationException ex)
-            {
-                return UnprocessableEntity(ex.Errors.Select(x => new
-                {
-                    Error = x.ErrorMessage,
-                    Property = x.PropertyName
-                }));
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Server error occured, please contact support" });
-            }
+          
         }
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}/access")]
         public IActionResult ChangeAccess(int id, [FromBody] UpdateUserAccessDto dto,[FromServices]IUpdateUserAccessCommand cmd)
         {
-            try
-            {
+
                 dto.UserId = id;
                 _commandHandler.HandleCommand(cmd, dto);
                 return NoContent();
-            }
-            catch (ValidationException ex)
-            {
-                return UnprocessableEntity(ex.Errors.Select(x => new
-                {
-                    Error = x.ErrorMessage,
-                    Property = x.PropertyName
-                }));
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Server error occured, please contact support" });
-            }
+       
         }
 
         // DELETE api/<UsersController>/5
@@ -152,27 +100,10 @@ namespace StarbuckClone.API.Controllers
         [HttpDelete("logout")]
         public IActionResult Logout([FromServices] ITokenStorage storage)
         {
-            try
-            {
+          
                 storage.Remove(Request.GetTokenId().Value);
                 return NoContent();
-            }
-            catch (ValidationException ex)
-            {
-                return UnprocessableEntity(ex.Errors.Select(x => new
-                {
-                    Error = x.ErrorMessage,
-                    Property = x.PropertyName
-                }));
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Server error occured, please contact support" });
-            }
+ 
         }
     }
 }

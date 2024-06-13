@@ -1,4 +1,5 @@
-﻿using StarbuckClone.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using StarbuckClone.Domain;
 using StarbuckClone.Implementation.Extensions;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Queries.Users;
@@ -25,7 +26,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Users
 
         public PagedResponse<UserDto> Execute(UserSearchDto search)
         {
-            IQueryable<User> query = _context.Users.AsQueryable();
+            IQueryable<User> query = _context.Users.Include(u => u.UseCases).AsQueryable();
 
             if (!string.IsNullOrEmpty(search.Username))
             {
@@ -66,26 +67,20 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Users
                 query = query.Where(x => x.IsActive==search.IsActive);
             }
 
-            var paginatedResult = query.AddPagination(search.Page, search.PerPage);
-
-            return new PagedResponse<UserDto>
+            return query.AddPagination(search.Page, search.PerPage, x => new UserDto
             {
-                CurrentPage = paginatedResult.CurrentPage,
-                Data = paginatedResult.Data.Select(x => new UserDto
-                {
-                    Id=x.Id,
-                    Username=x.Username,
-                    FirstName=x.FirstName,
-                    LastName=x.LastName,
-                    Email=x.Email,
-                    Role=x.Role==null?"No role":x.Role.Name,
-                    IsActive=x.IsActive.ToString(),
-                    UseCases = x.UseCases.Select(y=>y.UseCaseId)
+                Id = x.Id,
+                Username = x.Username,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Email = x.Email,
+                Role = x.Role == null ? "No role" : x.Role.Name,
+                IsActive = x.IsActive.ToString(),
+                UseCases = x.UseCases.Select(y=>y.UseCaseId)
 
-                }),
-                PerPage = paginatedResult.PerPage,
-                TotalCount = paginatedResult.TotalCount
-            };
+            });
+
+           
         }
     }
 }

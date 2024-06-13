@@ -4,23 +4,7 @@ using StarbuckClone.API;
 using StarbuckClone.API.Core;
 using StarbuckClone.API.Extensions;
 using StarbuckClone.Implementation;
-using StarbuckClone.Implementation.Logging;
-using StarbuckClone.Implementation.UseCases.Commands.CartLines;
-using StarbuckClone.Implementation.UseCases.Commands.ProductCategories;
-using StarbuckClone.Implementation.UseCases.Commands.Products;
-using StarbuckClone.Implementation.UseCases.Commands.Users;
-using StarbuckClone.Implementation.UseCases.Queries.AuditLogs;
-using StarbuckClone.Implementation.UseCases.Queries.ProductCategories;
-using StarbuckClone.Implementation.UseCases.Queries.Users;
-using StarbuckClone.Implementation.Validators;
 using StarbucksClone.Application;
-using StarbucksClone.Application.UseCases.Commands.CartLines;
-using StarbucksClone.Application.UseCases.Commands.ProductCategories;
-using StarbucksClone.Application.UseCases.Commands.Products;
-using StarbucksClone.Application.UseCases.Commands.Users;
-using StarbucksClone.Application.UseCases.Queries.AuditLogs;
-using StarbucksClone.Application.UseCases.Queries.ProductCategories;
-using StarbucksClone.Application.UseCases.Queries.Users;
 using StarbucksClone.DataAccess;
 using System.Text;
 
@@ -57,7 +41,7 @@ builder.Services.AddTransient<IApplicationActorProvider>(x =>
 
     var context = x.GetService<SCContext>();
 
-    return new JwtApplicationActorProvider(authHeader);
+    return new DefaultActorProvider();
 });
 builder.Services.AddTransient<IApplicationActor>(x =>
 {
@@ -118,6 +102,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 

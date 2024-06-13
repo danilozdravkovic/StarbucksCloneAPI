@@ -57,25 +57,19 @@ namespace StarbuckClone.Implementation.UseCases.Queries.ProductCategories
                 query = query.Where(x => x.Name.ToLower().Contains(search.Name.ToLower())); ;
             }
 
-            var paginatedResult = query.AddPagination(search.Page, search.PerPage);
-
-            var pagedResponse = new PagedResponse<ProductCategoryDto>
+            var paginatedResult = query.AddPagination(search.Page, search.PerPage, x => new ProductCategoryDto
             {
-                CurrentPage = paginatedResult.CurrentPage,
-                Data = paginatedResult.Data.Select(x => new ProductCategoryDto
-                {
-                    Id=x.Id,
-                    Name=x.Name
-                }).ToList(),
-                PerPage = paginatedResult.PerPage,
-                TotalCount = paginatedResult.TotalCount
-            };
+                Id = x.Id,
+                Name = x.Name
+            });
 
-            foreach(var oneProductCat in pagedResponse.Data){
+            
+
+            foreach(var oneProductCat in paginatedResult.Data){
                 this.FillChildCategories(oneProductCat);
             }
 
-            return pagedResponse;
+            return paginatedResult;
         }
 
         private void FillChildCategories(ProductCategoryDto category)

@@ -39,27 +39,9 @@ namespace StarbuckClone.API.Controllers
         public IActionResult Post([FromBody] CreateProductDto dto,
                                   [FromServices] ICreateProductCommand cmd)
         {
-            try
-            {
                 _commandHandler.HandleCommand(cmd, dto);
                 return StatusCode(201);
-            }
-            catch (ValidationException ex)
-            {
-                return UnprocessableEntity(ex.Errors.Select(x => new
-                {
-                    Error = x.ErrorMessage,
-                    Property = x.PropertyName
-                }));
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Server error occured, please contact support" });
-            }
+
         }
 
         // PUT api/<ProductsController>/5

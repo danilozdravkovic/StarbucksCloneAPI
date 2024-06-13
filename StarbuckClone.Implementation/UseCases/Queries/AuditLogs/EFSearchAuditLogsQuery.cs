@@ -48,21 +48,15 @@ namespace StarbuckClone.Implementation.UseCases.Queries.AuditLogs
                 query = query.Where(x => x.ExecutedAt < search.DateTo);
             }
 
-            var paginatedResult = query.AddPagination(search.Page, search.PerPage);
-
-            return new PagedResponse<AuditLogDto>
+            return query.AddPagination(search.Page, search.PerPage, x => new AuditLogDto
             {
-                CurrentPage = paginatedResult.CurrentPage,
-                Data = paginatedResult.Data.Select(x => new AuditLogDto
-                {
-                    Username = x.Username,
-                    UseCaseName = x.UseCaseName,
-                    ExecutedAt = x.ExecutedAt,
-                    Data = x.Data
-                }),
-                PerPage = paginatedResult.PerPage,
-                TotalCount = paginatedResult.TotalCount
-        };
+                Username = x.Username,
+                UseCaseName = x.UseCaseName,
+                ExecutedAt = x.ExecutedAt,
+                Data = x.Data
+            });
+
+            
 
           
             

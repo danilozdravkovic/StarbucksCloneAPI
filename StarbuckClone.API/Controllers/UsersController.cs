@@ -1,5 +1,9 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StarbuckClone.API.Core;
+using StarbuckClone.API.DTO;
+using StarbuckClone.API.Extensions;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Commands.Users;
@@ -14,18 +18,20 @@ namespace StarbuckClone.API.Controllers
     public class UsersController : ControllerBase
     {
         private UseCaseHandler _commandHandler;
+        private readonly JwtTokenCreator _tokenCreator;
 
-        public UsersController(UseCaseHandler commandHandler)
+        public UsersController(UseCaseHandler commandHandler, JwtTokenCreator tokenCreator)
         {
             _commandHandler = commandHandler;
+            _tokenCreator = tokenCreator;
         }
         // GET: api/<UsersController>
         [HttpGet]
-        public IActionResult Get([FromQuery] UserSearchDto search,[FromServices]ISearchUsersQuery query)
+        public IActionResult Get([FromQuery] UserSearchDto search, [FromServices] ISearchUsersQuery query)
         {
             try
             {
-                var result= _commandHandler.HandleQuery(query, search);
+                var result = _commandHandler.HandleQuery(query, search);
                 return Ok(result);
             }
             catch (ValidationException ex)
@@ -81,6 +87,33 @@ namespace StarbuckClone.API.Controllers
             }
         }
 
+        [HttpPost("signin")]
+        public IActionResult SignIn([FromBody] AuthRequest request)
+        {
+            try
+            {
+                string token = _tokenCreator.Create(request.Email, request.Password);
+
+                return Ok(new AuthResponse { Token = token });
+            }
+            catch (ValidationException ex)
+            {
+                return UnprocessableEntity(ex.Errors.Select(x => new
+                {
+                    Error = x.ErrorMessage,
+                    Property = x.PropertyName
+                }));
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Server error occured, please contact support" });
+            }
+        }
+
         // PUT api/<UsersController>/5
         [HttpPut("{id}/access")]
         public IActionResult ChangeAccess(int id, [FromBody] UpdateUserAccessDto dto,[FromServices]IUpdateUserAccessCommand cmd)
@@ -113,6 +146,33 @@ namespace StarbuckClone.API.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [Authorize]
+        [HttpDelete("logout")]
+        public IActionResult Logout([FromServices] ITokenStorage storage)
+        {
+            try
+            {
+                storage.Remove(Request.GetTokenId().Value);
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                return UnprocessableEntity(ex.Errors.Select(x => new
+                {
+                    Error = x.ErrorMessage,
+                    Property = x.PropertyName
+                }));
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Server error occured, please contact support" });
+            }
         }
     }
 }

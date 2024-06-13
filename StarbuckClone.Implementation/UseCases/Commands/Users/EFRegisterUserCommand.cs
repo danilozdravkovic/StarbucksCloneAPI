@@ -37,7 +37,7 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Users
                 FirstName = data.FirstName,
                 LastName = data.LastName,
                 Username = data.Username,
-                Password = data.Password
+                Password = BCrypt.Net.BCrypt.HashPassword(data.Password)
             };
 
             _context.Users.Add(user);

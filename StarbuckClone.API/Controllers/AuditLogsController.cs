@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Queries.AuditLogs;
@@ -18,6 +19,7 @@ namespace StarbuckClone.API.Controllers
             _commandHandler = commandHandler;
         }
         // GET: api/<AuditLogsController>
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] AuditLogSearchDto search , [FromServices] ISearchAuditLogsQuery query)
         {

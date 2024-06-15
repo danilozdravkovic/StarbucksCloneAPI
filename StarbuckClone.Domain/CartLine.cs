@@ -12,7 +12,6 @@ namespace StarbuckClone.Domain
         public int UserId { get; set; }
         public int ProductId { get; set; }
         public string SizeVolume { get; set; }
-        public decimal Price { get; set; }
 
         public virtual User User { get; set; }
         public virtual Product Product { get; set; }

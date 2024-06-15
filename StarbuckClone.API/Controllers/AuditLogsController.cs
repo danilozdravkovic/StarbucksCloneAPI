@@ -12,45 +12,22 @@ namespace StarbuckClone.API.Controllers
     [ApiController]
     public class AuditLogsController : ControllerBase
     {
-        private UseCaseHandler _commandHandler;
+        private UseCaseHandler _useCaseHandler;
 
         public AuditLogsController(UseCaseHandler commandHandler)
         {
-            _commandHandler = commandHandler;
+            _useCaseHandler = commandHandler;
         }
         // GET: api/<AuditLogsController>
         
         [HttpGet]
         public IActionResult Get([FromQuery] AuditLogSearchDto search , [FromServices] ISearchAuditLogsQuery query)
         {
-                var result=_commandHandler.HandleQuery(query, search);
+                var result=_useCaseHandler.HandleQuery(query, search);
 
                 return Ok(result);
         }
 
-        // GET api/<AuditLogsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<AuditLogsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<AuditLogsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<AuditLogsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

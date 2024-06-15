@@ -29,27 +29,11 @@ namespace StarbuckClone.API.Controllers
         [HttpGet]
         public IActionResult Get([FromQuery] UserSearchDto search, [FromServices] ISearchUsersQuery query)
         {
-            try
-            {
+          
                 var result = _commandHandler.HandleQuery(query, search);
                 return Ok(result);
-            }
-            catch (ValidationException ex)
-            {
-                return UnprocessableEntity(ex.Errors.Select(x => new
-                {
-                    Error = x.ErrorMessage,
-                    Property = x.PropertyName
-                }));
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Server error occured, please contact support" });
-            }
+       
+        
         }
 
         // GET api/<UsersController>/5

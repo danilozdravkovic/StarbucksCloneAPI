@@ -16,6 +16,14 @@ namespace StarbucksClone.Application.DTO
     public class AddInForCartDto
     {
         public int Id { get; set; }
-        public int Pump { get; set; }
+        public int? Pump { get; set; }
+    }
+
+    public class CartLineDto
+    {
+        public int CartLineId { get; set; }
+        public string ProductImage { get; set; }
+        public string ProductName { get; set; } 
+        public string ProductSize { get; set; }
     }
 }

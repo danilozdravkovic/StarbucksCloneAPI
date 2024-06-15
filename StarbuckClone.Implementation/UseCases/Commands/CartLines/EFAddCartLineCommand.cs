@@ -28,7 +28,7 @@ namespace StarbuckClone.Implementation.UseCases.Commands.CartLines
         }
         public int Id => 8;
 
-        public string Name => "Add one product to a cart";
+        public string Name => "Add a product to a cart";
 
         public void Execute(AddCartLineDto data)
         {
@@ -44,22 +44,13 @@ namespace StarbuckClone.Implementation.UseCases.Commands.CartLines
                 {
                     AddIn= _context.AddIns.Where(ad => ad.Id == a.Id).FirstOrDefault().Name,
                     Pump=a.Pump,
-                    AddInPrice = a.Pump==0? _context.AddIns.Where(ad => ad.Id == a.Id).FirstOrDefault().Price : _context.AddIns.Where(ad => ad.Id == a.Id).FirstOrDefault().Price * a.Pump
+                    AddInPrice = a.Pump==null? _context.AddIns.Where(ad => ad.Id == a.Id).FirstOrDefault().Price : _context.AddIns.Where(ad => ad.Id == a.Id).FirstOrDefault().Price * a.Pump.Value
                 }).ToList()
             };
 
             _context.CartLines.Add(cartLineToAdd);
             _context.SaveChanges();
 
-            var initialProductPrice = _context.Products.Where(p => p.Id == data.ProductId).FirstOrDefault().InitialPrice;
-            var allProductAddInsPrice = _context.CartLinesAddIns.Where(cla => cla.CartLineId == cartLineToAdd.Id).Sum(x => x.AddInPrice);
-            var newPrice = initialProductPrice + allProductAddInsPrice;
-
-            var cartLineToModify = _context.CartLines.Find(cartLineToAdd.Id);
-
-            cartLineToModify.Price = newPrice;
-
-            _context.SaveChanges();
         }
     }
 }

@@ -16,6 +16,10 @@ using StarbuckClone.Implementation.UseCases.Queries.Users;
 using StarbucksClone.Application.UseCases.Queries.AuditLogs;
 using StarbucksClone.Application.UseCases.Queries.ProductCategories;
 using StarbucksClone.Application.UseCases.Queries.Users;
+using StarbucksClone.Application.UseCases.Commands.Orders;
+using StarbuckClone.Implementation.UseCases.Commands.Orders;
+using StarbucksClone.Application.UseCases.Queries.CartLines;
+using StarbuckClone.Implementation.UseCases.Queries.CartLInes;
 
 namespace StarbuckClone.API.Extensions
 {
@@ -37,10 +41,14 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<IUpdateUserAccessCommand, EFUpdateUserAccessCommand>();
             services.AddTransient<ICreateProductCommand, EFCreateProductCommand>();
             services.AddTransient<IAddCartLineCommand, EFAddCartLineCommand>();
+            services.AddTransient<ICreateOrderCommand, EFCreateOrderCommand>();
 
             services.AddTransient<ISearchAuditLogsQuery, EFSearchAuditLogsQuery>();
             services.AddTransient<ISearchUsersQuery, EFSearchUsersQuery>();
             services.AddTransient<ISearchProductCategoriesQuery, EFSearchProductCategoriesQuery>();
+            services.AddTransient<ISearchCartLinesQuery, EFSearchCartLinesQuery>();
+
+
 
         }
     }

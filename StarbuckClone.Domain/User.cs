@@ -18,7 +18,7 @@ namespace StarbuckClone.Domain
 
         public virtual Role Role { get; set; }
 
-        public virtual ICollection<CartLine> OrderLines { get; set; } = new HashSet<CartLine>();
+        public virtual ICollection<CartLine> CartLines { get; set; } = new HashSet<CartLine>();
         public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
         public virtual ICollection<UserUseCase> UseCases { get; set; } = new HashSet<UserUseCase>();
     }

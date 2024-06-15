@@ -4,6 +4,7 @@ using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Commands.CartLines;
 using StarbucksClone.Application.UseCases.Commands.Users;
+using StarbucksClone.Application.UseCases.Queries.CartLines;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,9 +22,10 @@ namespace StarbuckClone.API.Controllers
         }
         // GET: api/<CartLinesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromBody] PagedSearchDto search, [FromServices] ISearchCartLinesQuery query)
         {
-            return new string[] { "value1", "value2" };
+            var result = _commandHandler.HandleQuery(query, search);
+            return Ok(result);
         }
 
         // GET api/<CartLinesController>/5

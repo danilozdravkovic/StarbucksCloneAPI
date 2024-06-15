@@ -3,10 +3,12 @@ using Microsoft.IdentityModel.Tokens;
 using StarbuckClone.API;
 using StarbuckClone.API.Core;
 using StarbuckClone.API.Extensions;
+using StarbuckClone.API.Profiles;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application;
 using StarbucksClone.DataAccess;
 using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddTransient<SCContext>();
 
@@ -93,6 +96,18 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyHeader().AllowAnyOrigin();
+                      });
+});
+
+
+
 
 var app = builder.Build();
 
@@ -105,6 +120,8 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 

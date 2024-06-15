@@ -52,7 +52,9 @@ namespace StarbuckClone.API.Core
                 }
 
                 httpContext.Response.StatusCode = 500;
+                Console.Write(exception);
                 await httpContext.Response.WriteAsJsonAsync(new { Message = $"An unexpected error has occured. Please contact our support." });
+                
             }
         }
     }

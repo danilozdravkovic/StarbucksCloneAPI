@@ -13,20 +13,7 @@ namespace StarbuckClone.API.Controllers
         {
             ".jpg", ".jpeg", ".png",".avif"
         };
-        // GET: api/<FilesController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<FilesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
+  
         // POST api/<FilesController>
         [HttpPost]
         public IActionResult Post([FromForm] FileUploadDto dto)
@@ -52,16 +39,5 @@ namespace StarbuckClone.API.Controllers
             return StatusCode(201, new { file = fileName });
         }
 
-        // PUT api/<FilesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<FilesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

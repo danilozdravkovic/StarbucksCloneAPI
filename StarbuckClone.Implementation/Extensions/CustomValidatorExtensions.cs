@@ -19,7 +19,7 @@ namespace StarbuckClone.Implementation.Extensions
                 .Must(x => context.Sizes.Any(p => p.Id == x && p.IsActive)).WithMessage("Size with given id does not exist.");
         }
 
-        public static IRuleBuilderOptions<T, AddInForCartDto> AddInsMustBeValid<T>(this IRuleBuilder<T, AddInForCartDto> ruleBuilder, SCContext context)
+        public static IRuleBuilderOptions<T, AddingAddInForCartDto> AddInsMustBeValid<T>(this IRuleBuilder<T, AddingAddInForCartDto> ruleBuilder, SCContext context)
         {
             return ruleBuilder
             .Must(addIn => context.AddIns.Any(x => x.Id == addIn.Id))

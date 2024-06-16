@@ -20,6 +20,8 @@ using StarbucksClone.Application.UseCases.Commands.Orders;
 using StarbuckClone.Implementation.UseCases.Commands.Orders;
 using StarbucksClone.Application.UseCases.Queries.CartLines;
 using StarbuckClone.Implementation.UseCases.Queries.CartLInes;
+using StarbucksClone.Application.UseCases.Queries.Orders;
+using StarbuckClone.Implementation.UseCases.Queries.Orders;
 
 namespace StarbuckClone.API.Extensions
 {
@@ -45,11 +47,13 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<ICreateOrderCommand, EFCreateOrderCommand>();
             services.AddTransient<IModifyCartLineCommand, EFModifyCartLineCommand>();
             services.AddTransient<IDeleteCartLineCommand, EFDeleteCartLineDto>();
+            services.AddTransient<IDeleteOrderCommand, EFDeleteOrderCommand>();
 
             services.AddTransient<ISearchAuditLogsQuery, EFSearchAuditLogsQuery>();
             services.AddTransient<ISearchUsersQuery, EFSearchUsersQuery>();
             services.AddTransient<ISearchProductCategoriesQuery, EFSearchProductCategoriesQuery>();
             services.AddTransient<ISearchCartLinesQuery, EFSearchCartLinesQuery>();
+            services.AddTransient<ISearchOrdersQuery, EFSearchOrdersQuery>();
 
 
 

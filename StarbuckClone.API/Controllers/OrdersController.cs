@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
+using StarbucksClone.Application.UseCases.Commands.CartLines;
 using StarbucksClone.Application.UseCases.Commands.Orders;
+using StarbucksClone.Application.UseCases.Queries.Orders;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,45 +13,40 @@ namespace StarbuckClone.API.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private UseCaseHandler _commandHandler;
+        private UseCaseHandler _useCaseHandler;
 
-        public OrdersController(UseCaseHandler commandHandler)
+        public OrdersController(UseCaseHandler useCaseHandler)
         {
-            _commandHandler = commandHandler;
+            _useCaseHandler = useCaseHandler;
         }
         // GET: api/<OrdersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromQuery] SearchOrderDto search, [FromServices] ISearchOrdersQuery query )
         {
-            return new string[] { "value1", "value2" };
+            var result = _useCaseHandler.HandleQuery(query, search);
+
+            return Ok(result);
         }
 
-        // GET api/<OrdersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+    
 
         // POST api/<OrdersController>
         [HttpPost]
         public IActionResult Post([FromBody] CreateOrderDto dto, [FromServices] ICreateOrderCommand command)
         {
-            _commandHandler.HandleCommand(command, dto);
+            _useCaseHandler.HandleCommand(command, dto);
 
             return StatusCode(201);
         }
 
-        // PUT api/<OrdersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
         // DELETE api/<OrdersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, [FromBody] DeleteOrderDto dto, [FromServices] IDeleteOrderCommand command)
         {
+            dto.OrderId = id;
+            _useCaseHandler.HandleCommand(command, dto);
+            return NoContent();
         }
     }
 }

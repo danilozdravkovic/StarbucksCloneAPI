@@ -10,10 +10,10 @@ namespace StarbucksClone.Application.DTO
     {
         public int ProductId { get; set; }
         public int SizeId { get; set; }
-        public IEnumerable<AddInForCartDto> AddIns { get; set; }
+        public IEnumerable<AddingAddInForCartDto> AddIns { get; set; }
     }
 
-    public class AddInForCartDto
+    public class AddingAddInForCartDto
     {
         public int Id { get; set; }
         public int? Pump { get; set; }
@@ -25,6 +25,16 @@ namespace StarbucksClone.Application.DTO
         public string ProductImage { get; set; }
         public string ProductName { get; set; } 
         public string ProductSize { get; set; }
+
+        public decimal ProductPrice { get; set; }
+
+        public IEnumerable<GetingAddInForCartDto> AddIns { get; set; }
+    }
+
+    public class GetingAddInForCartDto
+    {
+        public string AddInName { get; set; }
+        public int? Pump { get; set; }
     }
 
     public class ModifyCartLineDto
@@ -32,7 +42,7 @@ namespace StarbucksClone.Application.DTO
         public int CartLineId { get; set; }
         public int SizeId { get; set; }
 
-        public IEnumerable<AddInForCartDto> AddIns { get; set; }
+        public IEnumerable<AddingAddInForCartDto> AddIns { get; set; }
 
     }
 

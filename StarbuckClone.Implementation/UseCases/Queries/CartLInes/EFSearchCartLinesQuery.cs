@@ -25,15 +25,21 @@ namespace StarbuckClone.Implementation.UseCases.Queries.CartLInes
         public PagedResponse<CartLineDto> Execute(PagedSearchDto search)
         {
             var userId = _actor.Id;
-            var userCartLines = _context.CartLines.Include(c=>c.Product).Where(c=>c.UserId==userId);
+            var userCartLines = _context.CartLines.Include(c => c.Product).Include(c => c.CartLinesAddIns).Where(c=>c.UserId==userId);
 
             return userCartLines.AddPagination(search.Page, search.PerPage, x => new CartLineDto
             {
-                CartLineId=x.Id,
-                ProductImage=x.Product.ImageSrc,
-                ProductName=x.Product.Name,
-                ProductSize=x.SizeVolume
-            });
+                CartLineId = x.Id,
+                ProductImage = x.Product.ImageSrc,
+                ProductName = x.Product.Name,
+                ProductSize = x.SizeVolume,
+                ProductPrice=x.Product.InitialPrice + x.CartLinesAddIns.Sum(cl=>cl.AddInPrice),
+                AddIns = x.CartLinesAddIns.Select(cl => new GetingAddInForCartDto
+                {
+                    AddInName = cl.AddIn,
+                    Pump = cl.Pump,
+                }).ToList()
+            }) ;
         }
     }
 }

@@ -8,6 +8,6 @@ namespace StarbuckClone.Implementation
 {
     public class UseCaseInfo
     {
-        public static int MaxUseCaseId => 12;
+        public static int MaxUseCaseId => 14;
     }
 }

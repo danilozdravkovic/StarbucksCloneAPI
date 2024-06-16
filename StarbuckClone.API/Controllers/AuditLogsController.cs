@@ -14,9 +14,9 @@ namespace StarbuckClone.API.Controllers
     {
         private UseCaseHandler _useCaseHandler;
 
-        public AuditLogsController(UseCaseHandler commandHandler)
+        public AuditLogsController(UseCaseHandler useCaseHandler)
         {
-            _useCaseHandler = commandHandler;
+            _useCaseHandler = useCaseHandler;
         }
         // GET: api/<AuditLogsController>
         

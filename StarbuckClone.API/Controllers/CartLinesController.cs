@@ -14,46 +14,46 @@ namespace StarbuckClone.API.Controllers
     [ApiController]
     public class CartLinesController : ControllerBase
     {
-        private UseCaseHandler _commandHandler;
+        private UseCaseHandler _useCaseHandler;
 
-        public CartLinesController(UseCaseHandler commandHandler)
+        public CartLinesController(UseCaseHandler useCaseHanlder)
         {
-            _commandHandler = commandHandler;
+            _useCaseHandler = useCaseHanlder;
         }
         // GET: api/<CartLinesController>
         [HttpGet]
         public IActionResult Get([FromBody] PagedSearchDto search, [FromServices] ISearchCartLinesQuery query)
         {
-            var result = _commandHandler.HandleQuery(query, search);
+            var result = _useCaseHandler.HandleQuery(query, search);
             return Ok(result);
-        }
-
-        // GET api/<CartLinesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
         }
 
         // POST api/<CartLinesController>
         [HttpPost]
-        public IActionResult Post([FromBody] AddCartLineDto dto, [FromServices] IAddCartLineCommand cmd)
+        public IActionResult Post([FromBody] AddCartLineDto dto, [FromServices] IAddCartLineCommand command)
         {
-                _commandHandler.HandleCommand(cmd, dto);
+                _useCaseHandler.HandleCommand(command, dto);
 
                 return StatusCode(201);
         }
 
         // PUT api/<CartLinesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] ModifyCartLineDto dto, [FromServices] IModifyCartLineCommand command)
         {
+            dto.CartLineId = id;
+            _useCaseHandler.HandleCommand(command, dto);
+
+            return StatusCode(201);
         }
 
         // DELETE api/<CartLinesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, [FromBody] DeleteCartLineDto dto, [FromServices] IDeleteCartLineCommand command)
         {
+            dto.CartLineId = id;
+            _useCaseHandler.HandleCommand(command, dto);
+            return NoContent();
         }
     }
 }

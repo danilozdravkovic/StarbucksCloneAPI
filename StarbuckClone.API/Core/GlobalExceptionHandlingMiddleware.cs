@@ -36,9 +36,12 @@ namespace StarbuckClone.API.Core
                     return;
                 }
 
-                if (exception is NotFoundException)
+                if (exception is NotFoundException nf)
                 {
                     httpContext.Response.StatusCode = 404;
+                    var body = new { error = nf.Message };
+
+                    await httpContext.Response.WriteAsJsonAsync(body);
                     return;
                 }
 

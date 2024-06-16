@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using StarbuckClone.Implementation.Extensions;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.DataAccess;
 using System;
@@ -8,29 +9,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace StarbuckClone.Implementation.Validators
 {
     public class AddCartLineDtoValidator : AbstractValidator<AddCartLineDto>
     {
-        private readonly SCContext context;
+        private readonly SCContext _context;
         public AddCartLineDtoValidator(SCContext context) {
-            this.context = context;
+            _context = context;
             CascadeMode = CascadeMode.StopOnFirstFailure;
             RuleFor(x => x.ProductId).NotEmpty().WithMessage("Product id is required.")
-                                     .Must(x => context.Products.Any(p => p.Id == x && p.IsActive)).WithMessage("Product with given id does not exist");
+                .Must(x => context.Products.Any(p => p.Id == x && p.IsActive)).WithMessage("Product with given id does not exist.");
 
-            RuleFor(x => x.SizeId).NotEmpty().WithMessage("Size id is required.")
-                                     .Must(x => context.Sizes.Any(p => p.Id == x && p.IsActive)).WithMessage("Size with given id does not exist");
+            RuleFor(x => x.SizeId).SizeIdMustBeValid(_context);
 
-            RuleForEach(x => x.AddIns)
-            .Must(BeAValidAddIn)
-            .WithMessage("AddIns containes not existing id");
+            RuleForEach(x => x.AddIns).AddInsMustBeValid(_context);
 
         }
 
-        private bool BeAValidAddIn(AddInForCartDto addIn)
+        
+    }
+
+    public class ModifyCartLineDtoValidator : AbstractValidator<ModifyCartLineDto>
+    {
+        private readonly SCContext _context;
+        public ModifyCartLineDtoValidator(SCContext context)
         {
-            return context.AddIns.Any(x => x.Id == addIn.Id);
+            _context = context;
+            CascadeMode = CascadeMode.StopOnFirstFailure;
+        
+            RuleFor(x => x.SizeId).SizeIdMustBeValid(_context);
+
+            RuleForEach(x => x.AddIns).AddInsMustBeValid(_context);
+
         }
+
+
     }
 }

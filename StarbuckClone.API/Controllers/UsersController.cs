@@ -6,6 +6,7 @@ using StarbuckClone.API.DTO;
 using StarbuckClone.API.Extensions;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
+using StarbucksClone.Application.UseCases.Commands.CartLines;
 using StarbucksClone.Application.UseCases.Commands.Users;
 using StarbucksClone.Application.UseCases.Queries.Users;
 
@@ -17,12 +18,12 @@ namespace StarbuckClone.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private UseCaseHandler _commandHandler;
+        private UseCaseHandler _useCaseHandler;
         private readonly JwtTokenCreator _tokenCreator;
 
-        public UsersController(UseCaseHandler commandHandler, JwtTokenCreator tokenCreator)
+        public UsersController(UseCaseHandler useCaseHandler, JwtTokenCreator tokenCreator)
         {
-            _commandHandler = commandHandler;
+            _useCaseHandler = useCaseHandler;
             _tokenCreator = tokenCreator;
         }
         // GET: api/<UsersController>
@@ -30,7 +31,7 @@ namespace StarbuckClone.API.Controllers
         public IActionResult Get([FromQuery] UserSearchDto search, [FromServices] ISearchUsersQuery query)
         {
           
-                var result = _commandHandler.HandleQuery(query, search);
+                var result = _useCaseHandler.HandleQuery(query, search);
                 return Ok(result);
        
         
@@ -38,16 +39,17 @@ namespace StarbuckClone.API.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id, [FromServices] IGetUserQuery query)
         {
-            return "value";
+            var result = _useCaseHandler.HandleQuery(query, id);
+            return Ok(result);
         }
 
         // POST api/<UsersController>
         [HttpPost]
         public IActionResult Post([FromBody] RegisterUserDto dto, [FromServices] IRegisterUserCommand cmd)
         {
-                _commandHandler.HandleCommand(cmd, dto);
+                _useCaseHandler.HandleCommand(cmd, dto);
 
                 return StatusCode(201);
         
@@ -63,21 +65,32 @@ namespace StarbuckClone.API.Controllers
           
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] ModifyUserDto dto, [FromServices] IModifyUserCommand command)
+        {
+            dto.Id = id;
+            _useCaseHandler.HandleCommand(command, dto);
+
+            return StatusCode(201);
+        }
+
         // PUT api/<UsersController>/5
         [HttpPut("{id}/access")]
         public IActionResult ChangeAccess(int id, [FromBody] UpdateUserAccessDto dto,[FromServices]IUpdateUserAccessCommand cmd)
         {
 
                 dto.UserId = id;
-                _commandHandler.HandleCommand(cmd, dto);
+                _useCaseHandler.HandleCommand(cmd, dto);
                 return NoContent();
        
         }
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IDeleteUserCommand command)
         {
+            _useCaseHandler.HandleCommand(command, id);
+            return NoContent();
         }
 
         [Authorize]

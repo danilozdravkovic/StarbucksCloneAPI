@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarbuckClone.Implementation
+namespace StarbucksClone.Application.UseCases.Commands.Users
 {
-    public class UseCaseInfo
+    public interface IDeleteUserCommand : ICommand<int>
     {
-        public static int MaxUseCaseId => 22;
     }
 }

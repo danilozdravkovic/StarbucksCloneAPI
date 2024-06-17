@@ -29,7 +29,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Users
 
         public PagedResponse<UserDto> Execute(UserSearchDto search)
         {
-            IQueryable<User> query = _context.Users.Include(u => u.UseCases).AsQueryable();
+            IQueryable<User> query = _context.Users.Include(u => u.UseCases).Where(u=>u.IsActive).AsQueryable();
 
             if (!string.IsNullOrEmpty(search.Username))
             {

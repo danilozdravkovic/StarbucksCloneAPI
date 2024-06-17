@@ -25,7 +25,7 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Products
         }
         public int Id => 17;
 
-        public string Name => "Delete product";
+        public string Name => "Soft delete product";
 
         public void Execute(int data)
         {

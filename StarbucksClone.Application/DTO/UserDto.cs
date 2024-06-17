@@ -14,7 +14,6 @@ namespace StarbucksClone.Application.DTO
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }
-        public string IsActive { get; set; }
         public IEnumerable<int> UseCases { get; set; }
     }
 
@@ -28,5 +27,15 @@ namespace StarbucksClone.Application.DTO
         public DateTime? RegistratedDateTo { get; set; }
         public DateTime? RegistratedDateFrom { get; set; }
         public bool? IsActive { get; set; }
+    }
+
+    public class ModifyUserDto
+    {
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Password { get; set; }
     }
 }

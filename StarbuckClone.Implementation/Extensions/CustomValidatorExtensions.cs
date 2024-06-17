@@ -50,5 +50,28 @@ namespace StarbuckClone.Implementation.Extensions
                 .NotNull().WithMessage("Price is required.")
                 .GreaterThan(0).WithMessage("Price must be a positive number.");
         }
+
+
+        public static IRuleBuilderOptions<T, string> FirstNameMustBeValid<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .NotEmpty().WithMessage("First name can't be empty.")
+                                     .MinimumLength(3).WithMessage("First name must be at lesat 3 characters long.");
+        }
+
+        public static IRuleBuilderOptions<T, string> LastNameMustBeValid<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .NotEmpty().WithMessage("Last name can't be empty.")
+                                     .MinimumLength(3).WithMessage("Last name must be at lesat 3 characters long.");
+        }
+
+        public static IRuleBuilderOptions<T, string> PasswordMustBeValid<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .NotEmpty().WithMessage("Password name can't be empty.")
+                                    .Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$").WithMessage("Password must be at least 8 characters long, must contain one uppercase  letter,one lowercase letter and one number.");
+        }
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StarbuckClone.Domain;
 using StarbuckClone.Implementation.Extensions;
 using StarbucksClone.Application.DTO;
@@ -15,10 +16,12 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Orders
     public class EFSearchOrdersQuery : ISearchOrdersQuery
     {
         public readonly SCContext _context;
+        public readonly IMapper _mapper;
 
-        public EFSearchOrdersQuery(SCContext context)
+        public EFSearchOrdersQuery(SCContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public int Id => 14;
 
@@ -55,26 +58,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Orders
             }
 
 
-            return query.AddPagination(search.Page, search.PerPage, x => new OrderDto
-            {
-                OrderId = x.Id,
-                UserEmail = x.User.Email,
-                UserUserName = x.User.Username,
-                Address = x.Address,
-                CreatedAt = x.CreatedAt,
-                TotalPrice = x.TotalPrice,
-                Products = x.OrderLines.Select(o => new OrderProductDto
-                {
-                    Name = o.Product.Name,
-                    AddIns = o.OrderLineAddIns.Select(ola => new GetingAddInForCartDto
-                    {
-                        AddInName = ola.AddIn,
-                        Pump = ola.Pump
-                    }).ToList()
-                }).ToList()
-
-
-            }) ;
+            return query.AddPagination<Order,OrderDto>(search.Page, search.PerPage, _mapper) ;
         }
     }
 }

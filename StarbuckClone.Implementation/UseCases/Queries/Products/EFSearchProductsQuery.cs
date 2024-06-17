@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StarbuckClone.Domain;
 using StarbuckClone.Implementation.Extensions;
 using StarbucksClone.Application.DTO;
@@ -15,10 +16,12 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Products
     public class EFSearchProductsQuery : ISearchProductsQuery
     {
         public readonly SCContext _context;
+        public readonly IMapper _mapper;
 
-        public EFSearchProductsQuery(SCContext context)
+        public EFSearchProductsQuery(SCContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public int Id => 16;
 
@@ -40,15 +43,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Products
 
            
 
-            return query.AddPagination(search.Page, search.PerPage, x => new ProductDto
-            {
-                Id = x.Id,
-                Name=x.Name,
-                Category=x.Category.Name,
-                Calories=x.Calories,
-                ImageSrc=x.ImageSrc,
-                Price=x.InitialPrice
-            });
+            return query.AddPagination<Product,ProductDto>(search.Page, search.PerPage, _mapper);
         }
     }
 }

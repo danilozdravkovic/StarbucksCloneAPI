@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StarbuckClone.Domain;
 using StarbuckClone.Implementation.Extensions;
 using StarbucksClone.Application.DTO;
@@ -15,10 +16,12 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Users
     public class EFSearchUsersQuery : ISearchUsersQuery
     {
         public readonly SCContext _context;
+        public readonly IMapper _mapper;
 
-        public EFSearchUsersQuery(SCContext context)
+        public EFSearchUsersQuery(SCContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public int Id => 6;
 
@@ -67,18 +70,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Users
                 query = query.Where(x => x.IsActive==search.IsActive);
             }
 
-            return query.AddPagination(search.Page, search.PerPage, x => new UserDto
-            {
-                Id = x.Id,
-                Username = x.Username,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Email = x.Email,
-                Role = x.Role == null ? "No role" : x.Role.Name,
-                IsActive = x.IsActive.ToString(),
-                UseCases = x.UseCases.Select(y=>y.UseCaseId)
-
-            });
+            return query.AddPagination<User,UserDto>(search.Page, search.PerPage, _mapper);
 
            
         }

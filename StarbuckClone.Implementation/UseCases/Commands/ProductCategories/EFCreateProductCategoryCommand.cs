@@ -34,10 +34,16 @@ namespace StarbuckClone.Implementation.UseCases.Commands.ProductCategories
             {
                 Name = data.Name,
                 ParentId = data.ParentId,
-                Children = _context.ProductCategories.Where(p => data.ChildIds.Contains(p.Id)).ToList()
             };
 
             _context.ProductCategories.Add(category);
+
+            var childCategories = _context.ProductCategories
+                                          .Where(p => data.ChildIds.Contains(p.Id))
+                                          .ToList();
+
+            category.Children = childCategories;
+
             _context.SaveChanges();
 
             

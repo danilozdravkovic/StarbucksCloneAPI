@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StarbuckClone.Domain;
 using StarbuckClone.Implementation.Extensions;
 using StarbucksClone.Application;
@@ -12,11 +13,14 @@ namespace StarbuckClone.Implementation.UseCases.Queries.CartLInes
     {
         public readonly IApplicationActor _actor;
         public readonly SCContext _context;
+        public readonly IMapper _mapper;
 
-        public EFSearchCartLinesQuery(IApplicationActor actor, SCContext context)
+
+        public EFSearchCartLinesQuery(IApplicationActor actor, SCContext context, IMapper mapper)
         {
             _actor = actor;
             _context = context;
+            _mapper = mapper;
         }
         public int Id =>10;
 
@@ -27,19 +31,10 @@ namespace StarbuckClone.Implementation.UseCases.Queries.CartLInes
             var userId = _actor.Id;
             var userCartLines = _context.CartLines.Include(c => c.Product).Include(c => c.CartLinesAddIns).Where(c=>c.UserId==userId);
 
-            return userCartLines.AddPagination(search.Page, search.PerPage, x => new CartLineDto
-            {
-                CartLineId = x.Id,
-                ProductImage = x.Product.ImageSrc,
-                ProductName = x.Product.Name,
-                ProductSize = x.SizeVolume,
-                ProductPrice=x.Product.InitialPrice + x.CartLinesAddIns.Sum(cl=>cl.AddInPrice),
-                AddIns = x.CartLinesAddIns.Select(cl => new GetingAddInForCartDto
-                {
-                    AddInName = cl.AddIn.Name,
-                    Pump = cl.Pump,
-                }).ToList()
-            }) ;
+            return userCartLines.AddPagination<CartLine,CartLineDto>(search.Page, search.PerPage, _mapper) ;
         }
     }
 }
+
+
+

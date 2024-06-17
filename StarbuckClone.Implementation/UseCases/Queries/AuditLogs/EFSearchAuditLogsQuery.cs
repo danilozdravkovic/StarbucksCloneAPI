@@ -1,4 +1,5 @@
-﻿using StarbuckClone.Domain;
+﻿using AutoMapper;
+using StarbuckClone.Domain;
 using StarbuckClone.Implementation.Extensions;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Queries.AuditLogs;
@@ -18,10 +19,12 @@ namespace StarbuckClone.Implementation.UseCases.Queries.AuditLogs
         public string Name => "Search audit logs";
 
         public readonly SCContext _context;
+        private readonly IMapper _mapper;
 
-        public EFSearchAuditLogsQuery(SCContext context)
+        public EFSearchAuditLogsQuery(SCContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public PagedResponse<AuditLogDto> Execute(AuditLogSearchDto search)
@@ -48,13 +51,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.AuditLogs
                 query = query.Where(x => x.ExecutedAt < search.DateTo);
             }
 
-            return query.AddPagination(search.Page, search.PerPage, x => new AuditLogDto
-            {
-                Username = x.Username,
-                UseCaseName = x.UseCaseName,
-                ExecutedAt = x.ExecutedAt,
-                Data = x.Data
-            });
+            return query.AddPagination<UseCasesAuditLog,AuditLogDto>(search.Page, search.PerPage, _mapper);
 
             
 

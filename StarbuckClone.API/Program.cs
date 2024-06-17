@@ -3,7 +3,6 @@ using Microsoft.IdentityModel.Tokens;
 using StarbuckClone.API;
 using StarbuckClone.API.Core;
 using StarbuckClone.API.Extensions;
-using StarbuckClone.API.Profiles;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application;
 using StarbucksClone.DataAccess;
@@ -24,7 +23,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(UseCaseInfo).Assembly);
 
 builder.Services.AddTransient<SCContext>();
 

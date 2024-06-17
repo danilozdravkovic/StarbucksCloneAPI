@@ -36,7 +36,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.CartLInes
                 ProductPrice=x.Product.InitialPrice + x.CartLinesAddIns.Sum(cl=>cl.AddInPrice),
                 AddIns = x.CartLinesAddIns.Select(cl => new GetingAddInForCartDto
                 {
-                    AddInName = cl.AddIn,
+                    AddInName = cl.AddIn.Name,
                     Pump = cl.Pump,
                 }).ToList()
             }) ;

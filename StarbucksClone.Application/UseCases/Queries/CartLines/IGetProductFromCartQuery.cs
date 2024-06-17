@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarbucksClone.Application.UseCases.Commands.CartLines
+namespace StarbucksClone.Application.UseCases.Queries.CartLines
 {
-    public interface IDeleteCartLineCommand : ICommand<IDCartLineDto>
+    public interface IGetProductFromCartQuery : IQuery<SingleCartLineDto, IDCartLineDto>
     {
     }
 }

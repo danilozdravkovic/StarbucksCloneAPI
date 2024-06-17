@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarbuckClone.Domain", "Sta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarbucksClone.DataAccess", "StarbucksClone.DataAccess\StarbucksClone.DataAccess.csproj", "{F80E5CAA-28AD-41BD-81B1-E2AC700489D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarbucksClone.Application", "StarbucksClone.Application\StarbucksClone.Application.csproj", "{F2426FD3-4E1B-4933-BA63-35F1BA7B3098}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarbucksClone.Application", "StarbucksClone.Application\StarbucksClone.Application.csproj", "{F2426FD3-4E1B-4933-BA63-35F1BA7B3098}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarbuckClone.Implementation", "StarbuckClone.Implementation\StarbuckClone.Implementation.csproj", "{E4B1D084-88D6-4D22-AD8B-5E370970F529}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarbuckClone.Implementation", "StarbuckClone.Implementation\StarbuckClone.Implementation.csproj", "{E4B1D084-88D6-4D22-AD8B-5E370970F529}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarbuckClone.API", "StarbuckClone.API\StarbuckClone.API.csproj", "{680DA80D-1314-4FA4-A049-88EBC2C8C805}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarbuckClone.API", "StarbuckClone.API\StarbuckClone.API.csproj", "{680DA80D-1314-4FA4-A049-88EBC2C8C805}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

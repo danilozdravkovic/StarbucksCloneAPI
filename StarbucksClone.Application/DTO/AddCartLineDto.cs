@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarbuckClone.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,8 +47,25 @@ namespace StarbucksClone.Application.DTO
 
     }
 
-    public class DeleteCartLineDto
+    public class IDCartLineDto
     {
         public int CartLineId { get; set; }
     }
+
+    public class SingleCartLineDto
+    {
+        public string Size { get; set; }
+        
+        public IEnumerable<GettingAddInsForInterface> AddIns { get; set; }
+    }
+
+    public class GettingAddInsForInterface
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+       
+        public bool Selected { get; set; }
+        public IEnumerable<GettingAddInsForInterface> Children { get; set; }
+    }
+
 }

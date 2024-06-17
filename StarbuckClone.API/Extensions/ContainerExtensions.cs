@@ -54,6 +54,7 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<ISearchProductCategoriesQuery, EFSearchProductCategoriesQuery>();
             services.AddTransient<ISearchCartLinesQuery, EFSearchCartLinesQuery>();
             services.AddTransient<ISearchOrdersQuery, EFSearchOrdersQuery>();
+            services.AddTransient<IGetProductFromCartQuery, EFGetProductFromCartQuery>();
 
 
 

@@ -47,7 +47,7 @@ namespace StarbuckClone.Implementation.UseCases.Commands.CartLines
 
             cartLineForModification.CartLinesAddIns = data.AddIns.Select(a => new CartLinesAddIn
             {
-                AddIn = _context.AddIns.Where(ad => ad.Id == a.Id).FirstOrDefault().Name,
+                AddInId = a.Id,
                 Pump = a.Pump,
                 AddInPrice = a.Pump == null ? _context.AddIns.Where(ad => ad.Id == a.Id).FirstOrDefault().Price : _context.AddIns.Where(ad => ad.Id == a.Id).FirstOrDefault().Price * a.Pump.Value
             }).ToList();

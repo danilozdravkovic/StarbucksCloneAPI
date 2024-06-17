@@ -28,6 +28,15 @@ namespace StarbuckClone.API.Controllers
             return Ok(result);
         }
 
+        // GET api/CartLinesController>/5
+        [HttpGet("{id}")]
+        public IActionResult Get(int id, [FromQuery] IDCartLineDto search, IGetProductFromCartQuery query)
+        {
+            search.CartLineId = id;
+            var result = _useCaseHandler.HandleQuery(query, search);
+            return Ok(result);
+        }
+
         // POST api/<CartLinesController>
         [HttpPost]
         public IActionResult Post([FromBody] AddCartLineDto dto, [FromServices] IAddCartLineCommand command)
@@ -49,7 +58,7 @@ namespace StarbuckClone.API.Controllers
 
         // DELETE api/<CartLinesController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id, [FromBody] DeleteCartLineDto dto, [FromServices] IDeleteCartLineCommand command)
+        public IActionResult Delete(int id, [FromBody] IDCartLineDto dto, [FromServices] IDeleteCartLineCommand command)
         {
             dto.CartLineId = id;
             _useCaseHandler.HandleCommand(command, dto);

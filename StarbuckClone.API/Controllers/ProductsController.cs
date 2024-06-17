@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Commands.Products;
+using StarbucksClone.Application.UseCases.Queries.Products;
 using System.Reflection.Metadata;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,46 +15,55 @@ namespace StarbuckClone.API.Controllers
     public class ProductsController : ControllerBase
     {
 
-        private UseCaseHandler _commandHandler;
+        private UseCaseHandler _useCaseHandler;
 
-        public ProductsController(UseCaseHandler commandHandler)
+        public ProductsController(UseCaseHandler useCaseHandler)
         {
-            _commandHandler = commandHandler;
+            _useCaseHandler = useCaseHandler;
         }
         // GET: api/<ProductsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get([FromQuery] ProductSearchDto search, [FromServices] ISearchProductsQuery query)
         {
-            return new string[] { "value1", "value2" };
+            var result = _useCaseHandler.HandleQuery(query, search);
+            return Ok(result);
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id, [FromQuery] IDProductDto search, [FromServices] IGetProductQuery query)
         {
-            return "value";
+            search.Id = id;
+            var result=_useCaseHandler.HandleQuery(query, search);
+            return Ok(result);
         }
 
         // POST api/<ProductsController>
         [HttpPost]
-        public IActionResult Post([FromBody] CreateProductDto dto,
-                                  [FromServices] ICreateProductCommand cmd)
+        public IActionResult Post([FromBody] CreateProductDto dto,[FromServices] ICreateProductCommand command)
         {
-                _commandHandler.HandleCommand(cmd, dto);
+                _useCaseHandler.HandleCommand(command, dto);
                 return StatusCode(201);
 
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] ModifyProductDto dto, [FromServices] IModifyProductCommand command)
         {
+            dto.Id = id;
+            _useCaseHandler.HandleCommand(command, dto);
+            return StatusCode(201);
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IDeleteProductCommand command)
         {
+            
+            _useCaseHandler.HandleCommand(command, id);
+
+            return NoContent();
         }
     }
 }

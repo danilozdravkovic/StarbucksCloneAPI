@@ -26,12 +26,12 @@ namespace StarbuckClone.Implementation.UseCases.Queries.CartLInes
         public int Id => 15;
         public string Name => "Get single product from cart";
 
-        public SingleCartLineDto Execute(IDCartLineDto search)
+        public SingleCartLineDto Execute(int data)
         {
-            var cartLine = _context.CartLines.Include(c => c.CartLinesAddIns).ThenInclude(cl=>cl.AddIn).FirstOrDefault(c=>c.Id==search.CartLineId);
+            var cartLine = _context.CartLines.Include(c => c.CartLinesAddIns).ThenInclude(cl=>cl.AddIn).FirstOrDefault(c=>c.Id==data);
             if (cartLine == null)
             {
-                throw new NotFoundException(typeof(CartLine).ToString(), search.CartLineId);
+                throw new NotFoundException(typeof(CartLine).ToString(), data);
             }
             var initialCartLineAddIns = new List<AddIn>();
             var cartLineAddIns = new List<AddIn>();

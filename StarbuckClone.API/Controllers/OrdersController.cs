@@ -42,10 +42,10 @@ namespace StarbuckClone.API.Controllers
 
         // DELETE api/<OrdersController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id, [FromBody] DeleteOrderDto dto, [FromServices] IDeleteOrderCommand command)
+        public IActionResult Delete(int id, [FromServices] IDeleteOrderCommand command)
         {
-            dto.OrderId = id;
-            _useCaseHandler.HandleCommand(command, dto);
+            
+            _useCaseHandler.HandleCommand(command, id);
             return NoContent();
         }
     }

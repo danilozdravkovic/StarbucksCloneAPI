@@ -26,12 +26,12 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Orders
 
         public string Name => "Soft delete order";
 
-        public void Execute(DeleteOrderDto data)
+        public void Execute(int data)
         {
-            var orderForRemoving = _context.Orders.Find(data.OrderId);
+            var orderForRemoving = _context.Orders.Find(data);
             if (orderForRemoving == null)
             {
-                throw new NotFoundException(typeof(Order).ToString(), data.OrderId);
+                throw new NotFoundException(typeof(Order).ToString(), data);
             }
             orderForRemoving.IsActive = false;
             _context.SaveChanges();

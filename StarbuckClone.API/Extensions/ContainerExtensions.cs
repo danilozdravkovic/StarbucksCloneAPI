@@ -22,6 +22,8 @@ using StarbucksClone.Application.UseCases.Queries.CartLines;
 using StarbuckClone.Implementation.UseCases.Queries.CartLInes;
 using StarbucksClone.Application.UseCases.Queries.Orders;
 using StarbuckClone.Implementation.UseCases.Queries.Orders;
+using StarbucksClone.Application.UseCases.Queries.Products;
+using StarbuckClone.Implementation.UseCases.Queries.Products;
 
 namespace StarbuckClone.API.Extensions
 {
@@ -38,6 +40,7 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<CreateProductDtoValidator>();
             services.AddTransient<AddCartLineDtoValidator>();
             services.AddTransient<ModifyCartLineDtoValidator>();
+            services.AddTransient<ModifyProductDtoValidator>();
 
             services.AddTransient<IRegisterUserCommand, EFRegisterUserCommand>();
             services.AddTransient<ICreateProductCategoryCommand, EFCreateProductCategoryCommand>();
@@ -48,6 +51,8 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<IModifyCartLineCommand, EFModifyCartLineCommand>();
             services.AddTransient<IDeleteCartLineCommand, EFDeleteCartLineDto>();
             services.AddTransient<IDeleteOrderCommand, EFDeleteOrderCommand>();
+            services.AddTransient<IDeleteProductCommand, EFDeleteProductCommand>();
+            services.AddTransient<IModifyProductCommand, EFModifyProductCommand>();
 
             services.AddTransient<ISearchAuditLogsQuery, EFSearchAuditLogsQuery>();
             services.AddTransient<ISearchUsersQuery, EFSearchUsersQuery>();
@@ -55,6 +60,8 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<ISearchCartLinesQuery, EFSearchCartLinesQuery>();
             services.AddTransient<ISearchOrdersQuery, EFSearchOrdersQuery>();
             services.AddTransient<IGetProductFromCartQuery, EFGetProductFromCartQuery>();
+            services.AddTransient<ISearchProductsQuery, EFSearchProductsQuery>();
+            services.AddTransient<IGetProductQuery, EFGetProductQuery>();
 
 
 

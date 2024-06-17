@@ -22,7 +22,7 @@ namespace StarbuckClone.API.Controllers
         }
         // GET: api/<CartLinesController>
         [HttpGet]
-        public IActionResult Get([FromBody] PagedSearchDto search, [FromServices] ISearchCartLinesQuery query)
+        public IActionResult Get([FromQuery] PagedSearchDto search, [FromServices] ISearchCartLinesQuery query)
         {
             var result = _useCaseHandler.HandleQuery(query, search);
             return Ok(result);
@@ -30,10 +30,9 @@ namespace StarbuckClone.API.Controllers
 
         // GET api/CartLinesController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id, [FromQuery] IDCartLineDto search, IGetProductFromCartQuery query)
+        public IActionResult Get(int id, IGetProductFromCartQuery query)
         {
-            search.CartLineId = id;
-            var result = _useCaseHandler.HandleQuery(query, search);
+            var result = _useCaseHandler.HandleQuery(query, id);
             return Ok(result);
         }
 
@@ -58,10 +57,9 @@ namespace StarbuckClone.API.Controllers
 
         // DELETE api/<CartLinesController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id, [FromBody] IDCartLineDto dto, [FromServices] IDeleteCartLineCommand command)
+        public IActionResult Delete(int id, [FromServices] IDeleteCartLineCommand command)
         {
-            dto.CartLineId = id;
-            _useCaseHandler.HandleCommand(command, dto);
+            _useCaseHandler.HandleCommand(command, id);
             return NoContent();
         }
     }

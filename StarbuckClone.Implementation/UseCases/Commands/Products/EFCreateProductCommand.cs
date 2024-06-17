@@ -42,7 +42,8 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Products
                 Name = data.Name,
                 CategoryId = data.CategoryId,
                 Calories = data.Calories,
-                ImageSrc = data.ImageSrc
+                ImageSrc = data.ImageSrc,
+                InitialPrice=data.InitialPrice
             };
 
             _context.Products.Add(product);

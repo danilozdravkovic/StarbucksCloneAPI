@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StarbucksClone.Application.UseCases.Commands.Orders
 {
-    public interface IDeleteOrderCommand : ICommand<DeleteOrderDto>
+    public interface IDeleteOrderCommand : ICommand<int>
     {
     }
 }

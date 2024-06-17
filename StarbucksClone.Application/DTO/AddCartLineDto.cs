@@ -47,10 +47,6 @@ namespace StarbucksClone.Application.DTO
 
     }
 
-    public class IDCartLineDto
-    {
-        public int CartLineId { get; set; }
-    }
 
     public class SingleCartLineDto
     {

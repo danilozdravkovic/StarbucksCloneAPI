@@ -27,12 +27,12 @@ namespace StarbuckClone.Implementation.UseCases.Commands.CartLines
 
         public string Name => "Remove product from cart";
 
-        public void Execute(IDCartLineDto data)
+        public void Execute(int data)
         {
-            var cartLineForRemoving = _context.CartLines.Find(data.CartLineId);
+            var cartLineForRemoving = _context.CartLines.Find(data);
             if (cartLineForRemoving == null)
             {
-                throw new NotFoundException(typeof(CartLine).ToString(), data.CartLineId);
+                throw new NotFoundException(typeof(CartLine).ToString(), data);
             }
 
             _context.CartLines.Remove(cartLineForRemoving);

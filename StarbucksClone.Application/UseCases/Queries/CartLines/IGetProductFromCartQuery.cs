@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StarbucksClone.Application.UseCases.Queries.CartLines
 {
-    public interface IGetProductFromCartQuery : IQuery<SingleCartLineDto, IDCartLineDto>
+    public interface IGetProductFromCartQuery : IQuery<SingleCartLineDto, int>
     {
     }
 }

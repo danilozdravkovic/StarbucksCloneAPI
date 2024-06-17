@@ -13,10 +13,6 @@ namespace StarbucksClone.Application.DTO
         public decimal? TotalPrice { get; set; }
     }
 
-    public class DeleteOrderDto
-    {
-        public int OrderId { get; set; }
-    }
 
     public class SearchOrderDto : PagedSearchDto
     {

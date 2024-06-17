@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StarbucksClone.Application.UseCases.Commands.CartLines
 {
-    public interface IDeleteCartLineCommand : ICommand<IDCartLineDto>
+    public interface IDeleteCartLineCommand : ICommand<int>
     {
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
@@ -21,6 +22,7 @@ namespace StarbuckClone.API.Controllers
             _useCaseHandler = useCaseHandler;
         }
         // GET: api/<ProductCategoriesController>
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] ProductCategorySearchDto search, [FromServices] ISearchProductCategoriesQuery query)
         {
@@ -29,6 +31,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // GET api/<ProductCategoriesController>/5
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult Get(int id , [FromServices] IGetProductCategoryQuery query)
         {
@@ -37,6 +40,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // POST api/<ProductCategoriesController>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] CreateProductCategoryDto dto, [FromServices] ICreateProductCategoryCommand command)
         {
@@ -46,6 +50,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // PUT api/<ProductCategoriesController>/5
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] ModifyProductCategoryDto dto, [FromServices] IModifyProductCategoryCommand command)
         {
@@ -55,6 +60,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // DELETE api/<ProductCategoriesController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices] IDeleteProductCategoryCommand command)
         {

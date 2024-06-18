@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
@@ -21,6 +22,7 @@ namespace StarbuckClone.API.Controllers
             _useCaseHandler = useCaseHanlder;
         }
         // GET: api/<CartLinesController>
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] PagedSearchDto search, [FromServices] ISearchCartLinesQuery query)
         {
@@ -29,6 +31,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // GET api/CartLinesController>/5
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult Get(int id, IGetProductFromCartQuery query)
         {
@@ -37,6 +40,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // POST api/<CartLinesController>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] AddCartLineDto dto, [FromServices] IAddCartLineCommand command)
         {
@@ -46,6 +50,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // PUT api/<CartLinesController>/5
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] ModifyCartLineDto dto, [FromServices] IModifyCartLineCommand command)
         {
@@ -56,6 +61,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // DELETE api/<CartLinesController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices] IDeleteCartLineCommand command)
         {

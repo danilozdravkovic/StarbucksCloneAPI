@@ -27,6 +27,7 @@ namespace StarbuckClone.API.Controllers
             _tokenCreator = tokenCreator;
         }
         // GET: api/<UsersController>
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] UserSearchDto search, [FromServices] ISearchUsersQuery query)
         {
@@ -38,6 +39,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // GET api/<UsersController>/5
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult Get(int id, [FromServices] IGetUserQuery query)
         {
@@ -64,7 +66,7 @@ namespace StarbuckClone.API.Controllers
                 return Ok(new AuthResponse { Token = token });
           
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] ModifyUserDto dto, [FromServices] IModifyUserCommand command)
         {
@@ -75,6 +77,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // PUT api/<UsersController>/5
+        [Authorize]
         [HttpPut("{id}/access")]
         public IActionResult ChangeAccess(int id, [FromBody] UpdateUserAccessDto dto,[FromServices]IUpdateUserAccessCommand cmd)
         {
@@ -86,6 +89,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // DELETE api/<UsersController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices] IDeleteUserCommand command)
         {

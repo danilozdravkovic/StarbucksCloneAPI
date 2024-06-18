@@ -43,7 +43,7 @@ builder.Services.AddTransient<IApplicationActorProvider>(x =>
 
     var context = x.GetService<SCContext>();
 
-    return new DefaultActorProvider();
+    return new JwtApplicationActorProvider(authHeader);
 });
 builder.Services.AddTransient<IApplicationActor>(x =>
 {

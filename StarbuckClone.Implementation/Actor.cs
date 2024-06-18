@@ -18,7 +18,7 @@ namespace StarbuckClone.Implementation
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-        public IEnumerable<int> AllowedUseCases { get; set; }
+        public IEnumerable<int> AllowedUseCases { get; set; } 
 
     }
 
@@ -34,6 +34,6 @@ namespace StarbuckClone.Implementation
 
         public string LastName => "unauthorized";
 
-        public IEnumerable<int> AllowedUseCases => new List<int> { };
+        public IEnumerable<int> AllowedUseCases => new List<int> { 1};
     }
 }

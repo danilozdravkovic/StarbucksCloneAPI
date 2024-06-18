@@ -37,7 +37,23 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Users
                 FirstName = data.FirstName,
                 LastName = data.LastName,
                 Username = data.Username,
-                Password = BCrypt.Net.BCrypt.HashPassword(data.Password)
+                Password = BCrypt.Net.BCrypt.HashPassword(data.Password),
+                UseCases = new List<UserUseCase>()
+                {
+                    new UserUseCase { UseCaseId = 8},
+                    new UserUseCase { UseCaseId = 12},
+                    new UserUseCase { UseCaseId = 11},
+                    new UserUseCase { UseCaseId = 9},
+                    new UserUseCase { UseCaseId = 22},
+                    new UserUseCase { UseCaseId = 15},
+                    new UserUseCase { UseCaseId = 10},
+                    new UserUseCase { UseCaseId = 14},
+                    new UserUseCase { UseCaseId = 7},
+                    new UserUseCase { UseCaseId = 23},
+                    new UserUseCase { UseCaseId = 18},
+                    new UserUseCase { UseCaseId = 16},
+                    new UserUseCase { UseCaseId = 21},
+                }
             };
 
             _context.Users.Add(user);

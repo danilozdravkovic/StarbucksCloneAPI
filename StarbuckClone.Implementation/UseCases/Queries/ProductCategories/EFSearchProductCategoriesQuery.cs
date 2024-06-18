@@ -27,29 +27,14 @@ namespace StarbuckClone.Implementation.UseCases.Queries.ProductCategories
         {
             IQueryable<ProductCategory> query = _context.ProductCategories.Where(p=>p.IsActive).AsQueryable();
 
-            if (search.WithChildren.HasValue)
-            {
-                if (search.WithChildren.Value)
-                {
-                    query = query.Where(c => c.Children.Any());
-                }
-                else
-                {
-                    query = query.Where(c => !c.Children.Any());
-                }
-            }
-
-            if (search.OnlyCategoriesWithoutParent.HasValue)
-            {
-                if (search.OnlyCategoriesWithoutParent.Value)
-                {
-                    query = query.Where(x => x.ParentId == null);
-                }
-            }
 
             if (search.ParentId.HasValue)
             {
                 query = query.Where(x => x.ParentId == search.ParentId) ;
+            }
+            else
+            {
+                query = query.Where(x => x.ParentId == null);
             }
 
             if (!string.IsNullOrEmpty(search.Name))

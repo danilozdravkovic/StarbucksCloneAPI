@@ -19,7 +19,7 @@ namespace StarbuckClone.API.Controllers
             _useCaseHandler = useCaseHandler;
         }
         // GET: api/<AuditLogsController>
-        
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] AuditLogSearchDto search , [FromServices] ISearchAuditLogsQuery query)
         {

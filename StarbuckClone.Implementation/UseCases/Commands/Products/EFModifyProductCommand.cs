@@ -41,9 +41,14 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Products
 
             _validator.ValidateAndThrow(data);
 
-            var tempFile = Path.Combine("wwwroot", "temp", data.ImageSrc);
-            var destinationFile = Path.Combine("wwwroot", "posts", data.ImageSrc);
-            System.IO.File.Move(tempFile, destinationFile);
+                var tempFile = Path.Combine("wwwroot", "temp", data.ImageSrc);
+                if (File.Exists(tempFile))
+                {
+                    var destinationFile = Path.Combine("wwwroot", "posts", data.ImageSrc);
+                    System.IO.File.Move(tempFile, destinationFile);
+                }
+               
+
 
             productForModification.Name = data.Name;
             productForModification.InitialPrice = data.InitialPrice;

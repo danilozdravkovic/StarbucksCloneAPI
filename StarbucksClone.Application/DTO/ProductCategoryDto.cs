@@ -17,8 +17,6 @@ namespace StarbucksClone.Application.DTO
     {
         public int?  ParentId { get; set; }
         public string Name { get; set; }
-        public bool? WithChildren { get; set; }
-        public bool? OnlyCategoriesWithoutParent { get; set; }
     }
 
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using StarbuckClone.Domain;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,10 @@ namespace StarbucksClone.DataAccess.Configurations
                 "ProductsIncludedAddIns",
                  j => j.HasOne<AddIn>().WithMany().HasForeignKey("AddInId"),
                  j => j.HasOne<Product>().WithMany().HasForeignKey("ProductId")
-                ).Property<int?>("Pump");
+            ).Property<int?>("Pump");
+
+            builder.HasMany(x => x.OrderLines).WithOne(o => o.Product).OnDelete(DeleteBehavior.Restrict);
+           
         }
     }
 }

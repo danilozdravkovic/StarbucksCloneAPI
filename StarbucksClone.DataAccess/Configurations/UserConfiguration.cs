@@ -4,6 +4,7 @@ using StarbuckClone.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,9 +36,10 @@ namespace StarbucksClone.DataAccess.Configurations
 
             builder.Property(x => x.Password)
                    .IsRequired()
-                   .HasMaxLength(120);
+            .HasMaxLength(120);
 
-           
+            builder.HasMany(x => x.Orders).WithOne(o => o.User).OnDelete(DeleteBehavior.Restrict);
+            
         }
     }
 }

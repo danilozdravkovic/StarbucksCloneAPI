@@ -23,7 +23,12 @@ namespace StarbuckClone.Implementation.Validators
                                 .MaximumLength(50).WithMessage("Product name can't be longer then 50 letters.")
                                 .Must(x => !context.Products.Any(p => p.Name == x)).WithMessage("Product name already exists.");
 
-            RuleFor(x => x.ImageSrc).ImageSrcMustBeValid();
+            RuleFor(x => x.ImageSrc).NotNull().WithMessage("Image is required.")
+                .Must((dto, fileName) =>
+                {
+                    var path = Path.Combine("wwwroot", "temp", fileName);
+                    return File.Exists(path);
+                }).WithMessage("File doesn't exist.");
 
             RuleFor(x => x.Calories).NotNull().WithMessage("Calories are required.");
 
@@ -48,7 +53,12 @@ namespace StarbuckClone.Implementation.Validators
             .MaximumLength(50).WithMessage("Product name can't be longer than 50 letters.")
             .Must((dto, name) => BeUniqueName(dto)).WithMessage("Product name already exists.");
 
-            RuleFor(x => x.ImageSrc).ImageSrcMustBeValid();
+            RuleFor(x => x.ImageSrc).NotNull().WithMessage("Image is required.")
+                .Must((dto, fileName) =>
+                {
+                    var path = Path.Combine("wwwroot", "posts", fileName);
+                    return File.Exists(path);
+                }).WithMessage("File doesn't exist.");
 
             RuleFor(x => x.Calories).NotNull().WithMessage("Calories are required.");
 

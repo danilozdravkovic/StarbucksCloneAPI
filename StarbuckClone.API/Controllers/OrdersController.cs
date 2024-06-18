@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Commands.CartLines;
@@ -20,6 +21,7 @@ namespace StarbuckClone.API.Controllers
             _useCaseHandler = useCaseHandler;
         }
         // GET: api/<OrdersController>
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] SearchOrderDto search, [FromServices] ISearchOrdersQuery query )
         {
@@ -28,9 +30,10 @@ namespace StarbuckClone.API.Controllers
             return Ok(result);
         }
 
-    
+
 
         // POST api/<OrdersController>
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] CreateOrderDto dto, [FromServices] ICreateOrderCommand command)
         {
@@ -41,6 +44,7 @@ namespace StarbuckClone.API.Controllers
 
 
         // DELETE api/<OrdersController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id, [FromServices] IDeleteOrderCommand command)
         {

@@ -22,7 +22,7 @@ namespace StarbuckClone.API.Controllers
             _useCaseHandler = useCaseHandler;
         }
         // GET: api/<ProductCategoriesController>
-        [Authorize]
+        
         [HttpGet]
         public IActionResult Get([FromQuery] ProductCategorySearchDto search, [FromServices] ISearchProductCategoriesQuery query)
         {
@@ -31,7 +31,7 @@ namespace StarbuckClone.API.Controllers
         }
 
         // GET api/<ProductCategoriesController>/5
-        [Authorize]
+        
         [HttpGet("{id}")]
         public IActionResult Get(int id , [FromServices] IGetProductCategoryQuery query)
         {

@@ -42,6 +42,7 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<ModifyCartLineDtoValidator>();
             services.AddTransient<ModifyProductDtoValidator>();
             services.AddTransient<ModifyUserDtoValidator>();
+            services.AddTransient<ModifyProductCategoryDtoValidator>();
 
             services.AddTransient<IRegisterUserCommand, EFRegisterUserCommand>();
             services.AddTransient<ICreateProductCategoryCommand, EFCreateProductCategoryCommand>();
@@ -56,6 +57,8 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<IModifyProductCommand, EFModifyProductCommand>();
             services.AddTransient<IDeleteUserCommand, EFDeleteUserCommand>();
             services.AddTransient<IModifyUserCommand, EFModifyUserCommand>();
+            services.AddTransient<IDeleteProductCategoryCommand, EFDeleteProductCategoryCommand>();
+            services.AddTransient<IModifyProductCategoryCommand, EFModifyProductCategoryCommand>();
 
             services.AddTransient<ISearchAuditLogsQuery, EFSearchAuditLogsQuery>();
             services.AddTransient<ISearchUsersQuery, EFSearchUsersQuery>();
@@ -66,6 +69,7 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<ISearchProductsQuery, EFSearchProductsQuery>();
             services.AddTransient<IGetProductQuery, EFGetProductQuery>();
             services.AddTransient<IGetUserQuery, EFGetUserQuery>();
+            services.AddTransient<IGetProductCategoryQuery, EFGetProductCategoryQuery>();
 
 
 

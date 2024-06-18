@@ -6,11 +6,23 @@ using System.Threading.Tasks;
 
 namespace StarbucksClone.Application.DTO
 {
-    public class CreateProductCategoryDto
+
+    public class BaseProductCategoryDto
     {
         public string Name { get; set; }
         public int? ParentId { get; set; }
         public List<int> ChildIds { get; set; }
     }
+    public class CreateProductCategoryDto : BaseProductCategoryDto
+    {
+     
+    }
+
+    public class ModifyProductCategoryDto : BaseProductCategoryDto
+    {
+        public int Id { get; set; }
+       
+    }
+
 
 }

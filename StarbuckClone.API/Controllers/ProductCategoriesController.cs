@@ -14,46 +14,52 @@ namespace StarbuckClone.API.Controllers
     [ApiController]
     public class ProductCategoriesController : ControllerBase
     {
-        private UseCaseHandler _commandHandler;
+        private UseCaseHandler _useCaseHandler;
 
-        public ProductCategoriesController(UseCaseHandler commandHandler)
+        public ProductCategoriesController(UseCaseHandler useCaseHandler)
         {
-            _commandHandler = commandHandler;
+            _useCaseHandler = useCaseHandler;
         }
         // GET: api/<ProductCategoriesController>
         [HttpGet]
         public IActionResult Get([FromQuery] ProductCategorySearchDto search, [FromServices] ISearchProductCategoriesQuery query)
         {
-                var result = _commandHandler.HandleQuery(query, search);
+                var result = _useCaseHandler.HandleQuery(query, search);
                 return Ok(result);
         }
 
         // GET api/<ProductCategoriesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id , [FromServices] IGetProductCategoryQuery query)
         {
-            return "value";
+            var result = _useCaseHandler.HandleQuery(query, id);
+            return Ok(result);
         }
 
         // POST api/<ProductCategoriesController>
         [HttpPost]
         public IActionResult Post([FromBody] CreateProductCategoryDto dto, [FromServices] ICreateProductCategoryCommand command)
         {
-                _commandHandler.HandleCommand(command, dto);
+                _useCaseHandler.HandleCommand(command, dto);
                 return StatusCode(201);
     
         }
 
         // PUT api/<ProductCategoriesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] ModifyProductCategoryDto dto, [FromServices] IModifyProductCategoryCommand command)
         {
+            dto.Id = id;
+            _useCaseHandler.HandleCommand(command, dto);
+            return StatusCode(201);
         }
 
         // DELETE api/<ProductCategoriesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id, [FromServices] IDeleteProductCategoryCommand command)
         {
+            _useCaseHandler.HandleCommand(command, id);
+            return NoContent();
         }
     }
 }

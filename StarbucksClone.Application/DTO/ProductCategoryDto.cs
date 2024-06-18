@@ -20,4 +20,5 @@ namespace StarbucksClone.Application.DTO
         public bool? WithChildren { get; set; }
         public bool? OnlyCategoriesWithoutParent { get; set; }
     }
+
 }

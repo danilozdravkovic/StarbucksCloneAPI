@@ -25,7 +25,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.ProductCategories
 
         public PagedResponse<ProductCategoryDto> Execute(ProductCategorySearchDto search)
         {
-            IQueryable<ProductCategory> query = _context.ProductCategories.AsQueryable();
+            IQueryable<ProductCategory> query = _context.ProductCategories.Where(p=>p.IsActive).AsQueryable();
 
             if (search.WithChildren.HasValue)
             {
@@ -77,7 +77,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.ProductCategories
 
             int id = category.Id;
 
-            category.Children = _context.ProductCategories.Where(x => x.ParentId == id).Select(c => new ProductCategoryDto
+            category.Children = _context.ProductCategories.Where(x => x.ParentId == id && x.IsActive).Select(c => new ProductCategoryDto
             {
                 Id = c.Id,
                 Name = c.Name

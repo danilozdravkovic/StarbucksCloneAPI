@@ -10,23 +10,27 @@ using System.Threading.Tasks;
 
 namespace StarbuckClone.Implementation.Validators
 {
-    public class CreateProductCategoryDtoValidator : AbstractValidator<CreateProductCategoryDto>
+    public abstract class BaseProductCategoryDtoValidator<T> : AbstractValidator<T>
+        where T : BaseProductCategoryDto
     {
-        private SCContext context;
+        protected readonly SCContext context;
 
-        public CreateProductCategoryDtoValidator(SCContext context) 
+        protected BaseProductCategoryDtoValidator(SCContext context)
         {
             this.context = context;
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
             RuleFor(x => x.Name).NotNull().WithMessage("Category name is required.")
                                 .MinimumLength(2).WithMessage("Category name can't be one letter.")
-                                .MaximumLength(50).WithMessage("Category name can't be longer then 50 letters.")
-                                .Must(x => !context.ProductCategories.Any(p => p.Name == x)).WithMessage("Category name already exists.");
+                                .MaximumLength(50).WithMessage("Category name can't be longer than 50 letters.")
+                                .Must(NameIsUnique)
+                                .WithMessage("Category name already exists.");
 
-            RuleFor(x => x.ParentId).Must(DoesCategoryExistsWhenParentIdNotNull).WithMessage("Parent id does not exist.");
+            RuleFor(x => x.ParentId).Must(DoesCategoryExistsWhenParentIdNotNull)
+                                    .WithMessage("Parent id does not exist.");
 
-            RuleFor(x => x.ChildIds).Must(AllChildrenExist).WithMessage("Some of given child categories doesn't exist in database");
+            RuleFor(x => x.ChildIds).Must(AllChildrenExist)
+                                    .WithMessage("Some of given child categories don't exist in database");
         }
 
         private bool DoesCategoryExistsWhenParentIdNotNull(int? parentId)
@@ -45,10 +49,35 @@ namespace StarbuckClone.Implementation.Validators
             {
                 return true;
             }
-            
-            int numberOfCategoriesThatExsists = context.ProductCategories.Count(x => x.IsActive && ids.Contains(x.Id));
-            return numberOfCategoriesThatExsists == ids.Count();
-           
+
+            int numberOfCategoriesThatExist = context.ProductCategories.Count(x => x.IsActive && ids.Contains(x.Id));
+            return numberOfCategoriesThatExist == ids.Count();
+        }
+
+        private bool NameIsUnique(BaseProductCategoryDto dto, string name)
+        {
+            if (dto is ModifyProductCategoryDto modifyDto)
+            {
+                return !context.ProductCategories.Any(p => p.Name == name && p.Id != modifyDto.Id);
+            }
+            else
+            {
+                return !context.ProductCategories.Any(p => p.Name == name);
+            }
+        }
+    }
+
+    public class CreateProductCategoryDtoValidator : BaseProductCategoryDtoValidator<CreateProductCategoryDto>
+    {
+        public CreateProductCategoryDtoValidator(SCContext context) : base(context)
+        {
+        }
+    }
+
+    public class ModifyProductCategoryDtoValidator : BaseProductCategoryDtoValidator<ModifyProductCategoryDto>
+    {
+        public ModifyProductCategoryDtoValidator(SCContext context) : base(context)
+        {
         }
     }
 }

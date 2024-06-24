@@ -12,7 +12,7 @@ namespace StarbuckClone.Implementation.Extensions
             int totalCount = source.Count();
 
             int currentPage = page.HasValue ? (int)Math.Abs((double)page) : 1;
-            int itemsPerPage = perPage.HasValue ? (int)Math.Abs((double)perPage) : 10;
+            int itemsPerPage = perPage.HasValue ? (int)Math.Abs((double)perPage) : 50;
 
             int skip = itemsPerPage * (currentPage - 1);
             List<TResult> data = source.Skip(skip).Take(itemsPerPage).Select(selector).ToList();
@@ -33,7 +33,7 @@ namespace StarbuckClone.Implementation.Extensions
             int totalCount = source.Count();
 
             int currentPage = page.HasValue ? (int)Math.Abs((double)page) : 1;
-            int itemsPerPage = perPage.HasValue ? (int)Math.Abs((double)perPage) : 10;
+            int itemsPerPage = perPage.HasValue ? (int)Math.Abs((double)perPage) : 50;
 
             int skip = itemsPerPage * (currentPage - 1);
             source = source.Skip(skip).Take(itemsPerPage);

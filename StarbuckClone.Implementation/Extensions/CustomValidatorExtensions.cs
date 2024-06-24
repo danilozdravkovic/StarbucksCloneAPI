@@ -66,12 +66,12 @@ namespace StarbuckClone.Implementation.Extensions
                                      .MinimumLength(3).WithMessage("Last name must be at lesat 3 characters long.");
         }
 
-        public static IRuleBuilderOptions<T, string> PasswordMustBeValid<T>(this IRuleBuilder<T, string> ruleBuilder)
-        {
-            return ruleBuilder
-                .NotEmpty().WithMessage("Password name can't be empty.")
-                                    .Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$").WithMessage("Password must be at least 8 characters long, must contain one uppercase  letter,one lowercase letter and one number.");
-        }
+        //public static IRuleBuilderOptions<T, string> PasswordMustBeValid<T>(this IRuleBuilder<T, string> ruleBuilder)
+        //{
+        //    return ruleBuilder
+        //        .NotEmpty().WithMessage("Password can't be empty.")
+        //                            .Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$").WithMessage("Password must be at least 8 characters long, must contain one uppercase  letter,one lowercase letter and one number.");
+        //}
         
     }
 }

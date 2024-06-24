@@ -36,7 +36,7 @@ namespace StarbucksClone.Application.DTO
 
     public class ProductDto
     {
-        public int Id { get; set;}
+        public int Id { get; set; }
 
         public int CategoryId { get; set; }
         public string Name { get; set; }
@@ -44,6 +44,15 @@ namespace StarbucksClone.Application.DTO
         public int Calories { get; set; }
         public string Category { get; set; }
         public decimal Price { get; set; }
+
+        public IEnumerable<ProductSizeDto> Sizes { get; set; }
+    }
+
+    public class ProductSizeDto
+    {
+        public string Name { get; set; }
+        public int Size { get; set; }
+        public int? additionalCalories { get; set; }
     }
 
     public class IDProductDto

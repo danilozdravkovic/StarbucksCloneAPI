@@ -10,7 +10,7 @@ namespace StarbuckClone.Domain
     {
         public string Name { get; set; }
         public int SizeVolume { get; set; }
-        public int AdditionalCalories { get; set; }
+        public int? AdditionalCalories { get; set; }
 
         public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
 

@@ -16,6 +16,8 @@ namespace StarbuckClone.Implementation.Profiles
             CreateMap<Product, ProductDto>()
                 .ForMember(x => x.Category, y => y.MapFrom(p => p.Category.Name))
                 .ForMember(x => x.Price, y => y.MapFrom(p => p.InitialPrice));
+
+            CreateMap<Size, ProductSizeDto>();
         }
     }
 }

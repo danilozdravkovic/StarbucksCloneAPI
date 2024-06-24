@@ -31,6 +31,7 @@ namespace StarbuckClone.API.Core
                 x.Id,
                 x.Role.Name,
                 x.RoleId,
+                x.Email,
                 UseCaseIds = x.UseCases.Select(x => x.UseCaseId)
             }).FirstOrDefault();
 
@@ -56,6 +57,7 @@ namespace StarbuckClone.API.Core
                  new Claim("Username", user.Username),
                  new Claim("FirstName", user.FirstName),
                  new Claim("LastName", user.LastName),
+                 new Claim("Email", user.Email),
                  new Claim("Id", user.Id.ToString()),
                  new Claim("RoleId", user.RoleId==null ?  "" : user.RoleId.ToString() ),
                  new Claim("Role", user.Name==null? "" : user.Name),

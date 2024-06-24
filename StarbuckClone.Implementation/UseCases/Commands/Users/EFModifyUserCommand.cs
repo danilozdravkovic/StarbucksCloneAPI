@@ -44,8 +44,11 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Users
             userForModification.Email = data.Email;
             userForModification.FirstName = data.FirstName;
             userForModification.LastName = data.LastName;
-            userForModification.Password = BCrypt.Net.BCrypt.HashPassword(data.Password);
 
+            if (!string.IsNullOrEmpty(data.Password))
+            {
+                userForModification.Password = BCrypt.Net.BCrypt.HashPassword(data.Password);
+            }
 
 
             _context.SaveChanges();

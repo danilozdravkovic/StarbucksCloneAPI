@@ -33,7 +33,7 @@ namespace StarbuckClone.API.Core
 
             var actor = new Actor
             {
-                Email = claims.First(x => x.Type == "Username").Value,
+                Email = claims.First(x => x.Type == "Email").Value,
                 Username = claims.First(x => x.Type == "Username").Value,
                 FirstName = claims.First(x => x.Type == "FirstName").Value,
                 LastName = claims.First(x => x.Type == "LastName").Value,

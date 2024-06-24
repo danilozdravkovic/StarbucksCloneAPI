@@ -26,7 +26,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Products
 
         public ProductDto Execute(IDProductDto search)
         {
-            var productToReturn = _context.Products.Include(p=>p.Category).FirstOrDefault(p => p.Id == search.Id);
+            var productToReturn = _context.Products.Include(p=>p.Category).Include(p=>p.Sizes).FirstOrDefault(p => p.Id == search.Id);
             if (productToReturn == null)
             {
                 throw new NotFoundException(typeof(Product).ToString(), search.Id);
@@ -40,7 +40,13 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Products
                 Category = productToReturn.Category.Name,
                 Calories = productToReturn.Calories,
                 Price = productToReturn.InitialPrice,
-                CategoryId=productToReturn.CategoryId
+                CategoryId=productToReturn.CategoryId,
+                Sizes=productToReturn.Sizes.Select(x=> new ProductSizeDto
+                {
+                    Name=x.Name,
+                    Size=x.SizeVolume,
+                    additionalCalories=x.AdditionalCalories
+                })
             };
         }
     }

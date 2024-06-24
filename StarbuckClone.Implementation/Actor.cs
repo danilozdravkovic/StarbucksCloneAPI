@@ -38,6 +38,6 @@ namespace StarbuckClone.Implementation
 
         public string LastName => "unauthorized";
 
-        public IEnumerable<int> AllowedUseCases => new List<int> { 1,7};
+        public IEnumerable<int> AllowedUseCases => new List<int> { 1,7,16,18};
     }
 }

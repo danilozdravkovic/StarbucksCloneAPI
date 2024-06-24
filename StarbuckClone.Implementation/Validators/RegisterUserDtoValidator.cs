@@ -26,7 +26,8 @@ namespace StarbuckClone.Implementation.Validators
 
             RuleFor(x => x.LastName).LastNameMustBeValid();
 
-            RuleFor(x => x.Password).PasswordMustBeValid();
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Password can't be empty.")
+                                    .Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$").WithMessage("Password must be at least 8 characters long, must contain one uppercase  letter,one lowercase letter and one number.");
 
             RuleFor(x => x.Username).NotEmpty().WithMessage("Username name can't be empty.")
                                   .Matches("^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$").WithMessage("Username can't contain _ or . and must be between 3 and 20 chatacters long")
@@ -63,7 +64,8 @@ namespace StarbuckClone.Implementation.Validators
 
             RuleFor(x => x.LastName).LastNameMustBeValid();
 
-            RuleFor(x => x.Password).PasswordMustBeValid();
+            RuleFor(x => x.Password).Matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")
+                                    .When(x => !string.IsNullOrEmpty(x.Password)).WithMessage("Password must be at least 8 characters long, must contain one uppercase  letter,one lowercase letter and one number.");
 
             RuleFor(x => x.Username).NotEmpty().WithMessage("Username name can't be empty.")
                                   .Matches("^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$").WithMessage("Username can't contain _ or . and must be between 3 and 20 chatacters long")

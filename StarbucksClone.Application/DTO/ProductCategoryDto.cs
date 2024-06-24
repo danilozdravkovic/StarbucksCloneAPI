@@ -9,6 +9,7 @@ namespace StarbucksClone.Application.DTO
     public class ProductCategoryDto
     {
         public int Id { get; set; }
+        public int? ParentId { get;set; }
         public string Name { get; set; }
         public IEnumerable<ProductCategoryDto> Children { get; set; }
     }

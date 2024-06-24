@@ -9,6 +9,7 @@ namespace StarbucksClone.Application
     public interface IApplicationActor
     {
         int Id { get; }
+        int? RoleId { get; }
         string Username { get; }
         string Email { get; }
         string FirstName { get; }

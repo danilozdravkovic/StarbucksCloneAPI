@@ -38,6 +38,7 @@ namespace StarbuckClone.API.Core
                 FirstName = claims.First(x => x.Type == "FirstName").Value,
                 LastName = claims.First(x => x.Type == "LastName").Value,
                 Id = int.Parse(claims.First(x => x.Type == "Id").Value),
+                RoleId = int.TryParse(claims.FirstOrDefault(x => x.Type == "RoleId")?.Value, out var roleId) ? roleId : (int?)null,
                 AllowedUseCases = JsonConvert.DeserializeObject<List<int>>(claims.First(x => x.Type == "UseCaseIds").Value)
             };
 

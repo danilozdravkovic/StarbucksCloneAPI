@@ -36,6 +36,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.ProductCategories
             {
                 Id = productCategory.Id,
                 Name = productCategory.Name,
+                ParentId=productCategory.ParentId
             };
 
             FillChildCategories(productCatToReturn);

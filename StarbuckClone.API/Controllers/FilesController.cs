@@ -12,7 +12,7 @@ namespace StarbuckClone.API.Controllers
     {
         private static IEnumerable<string> allowedExtensions = new List<string>
         {
-            ".jpg", ".jpeg", ".png",".avif"
+            ".jpg", ".jpeg", ".png"
         };
 
         // POST api/<FilesController>

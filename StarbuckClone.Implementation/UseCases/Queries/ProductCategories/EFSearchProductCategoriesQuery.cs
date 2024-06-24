@@ -65,7 +65,8 @@ namespace StarbuckClone.Implementation.UseCases.Queries.ProductCategories
             category.Children = _context.ProductCategories.Where(x => x.ParentId == id && x.IsActive).Select(c => new ProductCategoryDto
             {
                 Id = c.Id,
-                Name = c.Name
+                Name = c.Name,
+                ParentId=c.ParentId
             }).ToList();
 
 

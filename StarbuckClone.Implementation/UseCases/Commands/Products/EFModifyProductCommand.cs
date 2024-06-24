@@ -37,16 +37,16 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Products
                 throw new NotFoundException(typeof(Product).ToString(), data.Id);
             }
 
-            
+            var tempFile = Path.Combine("wwwroot", "temp", data.ImageSrc);
+            if (File.Exists(tempFile))
+            {
+                var destinationFile = Path.Combine("wwwroot", "posts", data.ImageSrc);
+                System.IO.File.Move(tempFile, destinationFile);
+            }
 
             _validator.ValidateAndThrow(data);
 
-                var tempFile = Path.Combine("wwwroot", "temp", data.ImageSrc);
-                if (File.Exists(tempFile))
-                {
-                    var destinationFile = Path.Combine("wwwroot", "posts", data.ImageSrc);
-                    System.IO.File.Move(tempFile, destinationFile);
-                }
+               
                
 
 

@@ -39,7 +39,8 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Products
                 ImageSrc = productToReturn.ImageSrc,
                 Category = productToReturn.Category.Name,
                 Calories = productToReturn.Calories,
-                Price = productToReturn.InitialPrice
+                Price = productToReturn.InitialPrice,
+                CategoryId=productToReturn.CategoryId
             };
         }
     }

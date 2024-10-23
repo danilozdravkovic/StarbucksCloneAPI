@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StarbucksClone.DataAccess;
 
@@ -11,9 +12,11 @@ using StarbucksClone.DataAccess;
 namespace StarbucksClone.DataAccess.Migrations
 {
     [DbContext(typeof(SCContext))]
-    partial class SCContextModelSnapshot : ModelSnapshot
+    [Migration("20241002201441_SelectedChangedToSelectedId")]
+    partial class SelectedChangedToSelectedId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,52 @@ namespace StarbucksClone.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ProductsCustomAddIns", b =>
+                {
+                    b.Property<int>("AddInId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Pump")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SelectedId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddInId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SelectedId");
+
+                    b.ToTable("ProductsCustomAddIns");
+                });
+
+            modelBuilder.Entity("ProductsIncludedAddIns", b =>
+                {
+                    b.Property<int>("AddInId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Pump")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SelectedId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddInId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SelectedId");
+
+                    b.ToTable("ProductsIncludedAddIns");
+                });
 
             modelBuilder.Entity("ProductsSizes", b =>
                 {
@@ -125,46 +174,6 @@ namespace StarbucksClone.DataAccess.Migrations
                     b.HasIndex("CartLineId");
 
                     b.ToTable("CartLinesAddIns");
-                });
-
-            modelBuilder.Entity("StarbuckClone.Domain.IncludedProductAddIn", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AddInId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Pump")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SelectedId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AddInId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SelectedId");
-
-                    b.ToTable("IncludedProductAddIns");
                 });
 
             modelBuilder.Entity("StarbuckClone.Domain.LinkPosition", b =>
@@ -633,6 +642,48 @@ namespace StarbucksClone.DataAccess.Migrations
                     b.ToTable("UserUseCases");
                 });
 
+            modelBuilder.Entity("ProductsCustomAddIns", b =>
+                {
+                    b.HasOne("StarbuckClone.Domain.AddIn", null)
+                        .WithMany()
+                        .HasForeignKey("AddInId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StarbuckClone.Domain.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StarbuckClone.Domain.AddIn", null)
+                        .WithMany()
+                        .HasForeignKey("SelectedId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProductsIncludedAddIns", b =>
+                {
+                    b.HasOne("StarbuckClone.Domain.AddIn", null)
+                        .WithMany()
+                        .HasForeignKey("AddInId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StarbuckClone.Domain.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StarbuckClone.Domain.AddIn", null)
+                        .WithMany()
+                        .HasForeignKey("SelectedId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ProductsSizes", b =>
                 {
                     b.HasOne("StarbuckClone.Domain.Product", null)
@@ -693,32 +744,6 @@ namespace StarbucksClone.DataAccess.Migrations
                     b.Navigation("AddIn");
 
                     b.Navigation("CartLine");
-                });
-
-            modelBuilder.Entity("StarbuckClone.Domain.IncludedProductAddIn", b =>
-                {
-                    b.HasOne("StarbuckClone.Domain.AddIn", "AddIn")
-                        .WithMany("IncludedProductAddIns")
-                        .HasForeignKey("AddInId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StarbuckClone.Domain.Product", "Product")
-                        .WithMany("IncludedProductAddIns")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("StarbuckClone.Domain.AddIn", "SelectedAddIn")
-                        .WithMany()
-                        .HasForeignKey("SelectedId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("AddIn");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("SelectedAddIn");
                 });
 
             modelBuilder.Entity("StarbuckClone.Domain.NavigationLink", b =>
@@ -834,8 +859,6 @@ namespace StarbucksClone.DataAccess.Migrations
                     b.Navigation("CartLinesAddIns");
 
                     b.Navigation("Children");
-
-                    b.Navigation("IncludedProductAddIns");
                 });
 
             modelBuilder.Entity("StarbuckClone.Domain.CartLine", b =>
@@ -866,8 +889,6 @@ namespace StarbucksClone.DataAccess.Migrations
             modelBuilder.Entity("StarbuckClone.Domain.Product", b =>
                 {
                     b.Navigation("CartLines");
-
-                    b.Navigation("IncludedProductAddIns");
 
                     b.Navigation("OrderLines");
                 });

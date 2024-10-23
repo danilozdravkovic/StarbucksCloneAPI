@@ -46,13 +46,25 @@ namespace StarbucksClone.Application.DTO
         public decimal Price { get; set; }
 
         public IEnumerable<ProductSizeDto> Sizes { get; set; }
+        public IEnumerable<ProductIncludedAddInDto> IncludedAddIns { get; set; }
     }
 
     public class ProductSizeDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Size { get; set; }
-        public int? additionalCalories { get; set; }
+        public int? AdditionalCalories { get; set; }
+    }
+
+    public class ProductIncludedAddInDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int? Pump { get; set; }
+        public bool Selected { get; set; }
+        public IEnumerable<ProductIncludedAddInDto> Children { get; set; }
+
     }
 
     public class IDProductDto

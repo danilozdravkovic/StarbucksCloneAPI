@@ -16,8 +16,8 @@ namespace StarbuckClone.Domain
 
         public virtual ProductCategory Category { get; set; }
         public virtual ICollection<Size> Sizes { get; set; } = new HashSet<Size>();
-        public virtual ICollection<AddIn> IncludedAddIns{ get; set; } = new HashSet<AddIn>();
-        public virtual ICollection<AddIn> CustomAddIns { get; set; } = new HashSet<AddIn>();
+        public virtual ICollection<IncludedProductAddIn> IncludedProductAddIns { get; set; } = new HashSet<IncludedProductAddIn>();
+        //public virtual ICollection<AddIn> CustomAddIns { get; set; } = new HashSet<AddIn>();
         public virtual ICollection<CartLine> CartLines { get; set; } = new HashSet<CartLine>();
         public virtual ICollection<OrderLine> OrderLines { get; set; } = new HashSet<OrderLine>();
     }

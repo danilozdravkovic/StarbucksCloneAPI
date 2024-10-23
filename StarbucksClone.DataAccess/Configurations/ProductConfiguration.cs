@@ -27,18 +27,6 @@ namespace StarbucksClone.DataAccess.Configurations
                  j => j.HasOne<Product>().WithMany().HasForeignKey("ProductId")
                 );
 
-            builder.HasMany(x=>x.CustomAddIns).WithMany(x=>x.CustomProducts).UsingEntity<Dictionary<string, object>>(
-                "ProductsCustomAddIns",
-                 j => j.HasOne<AddIn>().WithMany().HasForeignKey("AddInId"),
-                 j => j.HasOne<Product>().WithMany().HasForeignKey("ProductId")
-                ).Property<int?>("Pump");
-
-            builder.HasMany(x => x.IncludedAddIns).WithMany(x => x.IncludedProducts).UsingEntity<Dictionary<string, object>>(
-                "ProductsIncludedAddIns",
-                 j => j.HasOne<AddIn>().WithMany().HasForeignKey("AddInId"),
-                 j => j.HasOne<Product>().WithMany().HasForeignKey("ProductId")
-            ).Property<int?>("Pump");
-
             builder.HasMany(x => x.OrderLines).WithOne(o => o.Product).OnDelete(DeleteBehavior.Restrict);
            
         }

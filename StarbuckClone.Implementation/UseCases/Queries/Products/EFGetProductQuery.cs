@@ -26,28 +26,75 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Products
 
         public ProductDto Execute(IDProductDto search)
         {
-            var productToReturn = _context.Products.Include(p=>p.Category).Include(p=>p.Sizes).FirstOrDefault(p => p.Id == search.Id);
-            if (productToReturn == null)
+            var product = _context.Products.Include(p=>p.Category)
+                                                   .Include(p=>p.Sizes)
+                                                   .Include(p => p.IncludedProductAddIns)         
+                                                   .ThenInclude(ipa => ipa.AddIn)
+                                                   .FirstOrDefault(p => p.Id == search.Id);
+            if (product == null)
             {
                 throw new NotFoundException(typeof(Product).ToString(), search.Id);
             }
 
-            return new ProductDto
+            var productToReturn =new ProductDto
             {
-                Name = productToReturn.Name,
-                Id = productToReturn.Id,
-                ImageSrc = productToReturn.ImageSrc,
-                Category = productToReturn.Category.Name,
-                Calories = productToReturn.Calories,
-                Price = productToReturn.InitialPrice,
-                CategoryId=productToReturn.CategoryId,
-                Sizes=productToReturn.Sizes.Select(x=> new ProductSizeDto
+                Name = product.Name,
+                Id = product.Id,
+                ImageSrc = product.ImageSrc,
+                Category = product.Category.Name,
+                Calories = product.Calories,
+                Price = product.InitialPrice,
+                CategoryId = product.CategoryId,
+                Sizes = product.Sizes.Select(x => new ProductSizeDto
                 {
-                    Name=x.Name,
-                    Size=x.SizeVolume,
-                    additionalCalories=x.AdditionalCalories
-                })
+                    Id=x.Id,
+                    Name = x.Name,
+                    Size = x.SizeVolume,
+                    AdditionalCalories = x.AdditionalCalories
+                }).ToList(),
+                IncludedAddIns = product.IncludedProductAddIns.Where(ipa=>ipa.AddIn.ParentId==null).Select(x => new ProductIncludedAddInDto
+                {
+                    Id = x.AddInId,
+                    Name = x.AddIn.Name,
+                    Pump = null,
+                    Selected = false,
+                }).ToList()
+            
             };
+
+
+            foreach(var addIn in productToReturn.IncludedAddIns)
+            {
+                FillChildAddIns(addIn);
+            }
+
+
+            return productToReturn;
+        }
+
+        private void FillChildAddIns(ProductIncludedAddInDto addIn)
+        {
+            var id = addIn.Id;
+
+            var children = _context.AddIns.Where(p => p.ParentId == id).Select(x => new ProductIncludedAddInDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Pump = _context.IncludedProductAddIns.Where(ipa=>ipa.SelectedId==x.Id).FirstOrDefault().Pump,
+                Selected = _context.IncludedProductAddIns.Any(ipa=>ipa.SelectedId==x.Id)
+            }).ToList();
+
+
+            addIn.Children = children.Any() ? children : null;
+
+            if (addIn.Children != null)
+            {
+                foreach (var child in addIn.Children)
+                {
+                    FillChildAddIns(child);
+                }
+            }
+
         }
     }
 }

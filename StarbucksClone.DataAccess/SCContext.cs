@@ -45,9 +45,6 @@ namespace StarbucksClone.DataAccess
 
             modelBuilder.Entity<OrderLine>().Property(x => x.SizeVolume).IsRequired().HasMaxLength(20);
 
-            modelBuilder.Entity<AddIn>().Property(x => x.Selected).HasDefaultValue(false);
-            
-
             modelBuilder.Entity<OrderLineAddIn>().Property(x => x.AddIn).IsRequired().HasMaxLength(40);
 
             modelBuilder.Entity<LinkPosition>().Property(x => x.Name).IsRequired().HasMaxLength(30);
@@ -60,8 +57,10 @@ namespace StarbucksClone.DataAccess
             modelBuilder.Entity<Role>().HasIndex(x => x.Name).IsUnique();
 
             modelBuilder.Entity<AddIn>().HasMany(x => x.CartLinesAddIns).WithOne(c => c.AddIn).OnDelete(DeleteBehavior.Restrict);
-            
-            
+
+            modelBuilder.Entity<IncludedProductAddIn>().HasOne(e => e.SelectedAddIn).WithMany().HasForeignKey(e => e.SelectedId).OnDelete(DeleteBehavior.Restrict);
+
+
 
             modelBuilder.Entity<UserUseCase>().HasKey(x => new
             {
@@ -118,6 +117,7 @@ namespace StarbucksClone.DataAccess
         public DbSet<AddIn> AddIns { get; set; }
         public DbSet<UserUseCase> UserUseCases { get; set; }
         public DbSet<RoleUseCase> RoleUseCases { get; set; }
+        public DbSet<IncludedProductAddIn> IncludedProductAddIns { get; set; }
 
     }
 }

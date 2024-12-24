@@ -3,7 +3,7 @@ using StarbuckClone.Domain;
 using StarbucksClone.Application;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.Exceptions;
-using StarbucksClone.Application.UseCases.Commands.Orders;
+using StarbucksClone.Application.UseCases.Command.Orders;
 using StarbucksClone.DataAccess;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,12 +71,16 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Orders
             Order newOrder = new Order
             {
                 UserId = _actor.Id,
+                PickUpOption=data.PickUpOption,
                 Address = data.Address,
+                PaymentOption=data.PaymentOption,
+                CardNumber=data.CardNumber,
                 TotalPrice = data.TotalPrice.Value,
                 OrderLines = currentUserCartLines.Select(x => new OrderLine
                 {
                     ProductId = x.ProductId,
                     SizeVolume = x.SizeVolume,
+                    IsFavourite= x.IsFavourite,
                     OrderLineAddIns = x.CartLinesAddIns.Select(ca => new OrderLineAddIn
                     {
                         OrderLineId = x.Id,

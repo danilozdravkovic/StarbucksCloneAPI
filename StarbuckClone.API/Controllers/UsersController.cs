@@ -6,8 +6,8 @@ using StarbuckClone.API.DTO;
 using StarbuckClone.API.Extensions;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
-using StarbucksClone.Application.UseCases.Commands.CartLines;
-using StarbucksClone.Application.UseCases.Commands.Users;
+using StarbucksClone.Application.UseCases.Command.CartLines;
+using StarbucksClone.Application.UseCases.Command.Users;
 using StarbucksClone.Application.UseCases.Queries.Users;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

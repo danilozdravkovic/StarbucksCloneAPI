@@ -26,6 +26,7 @@ namespace StarbucksClone.Application.DTO
         public string ProductImage { get; set; }
         public string ProductName { get; set; } 
         public string ProductSize { get; set; }
+        public bool isFavourite { get; set; }
 
         public decimal ProductPrice { get; set; }
 

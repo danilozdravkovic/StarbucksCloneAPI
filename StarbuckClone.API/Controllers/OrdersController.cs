@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
-using StarbucksClone.Application.UseCases.Commands.CartLines;
-using StarbucksClone.Application.UseCases.Commands.Orders;
+using StarbucksClone.Application.UseCases.Command.CartLines;
+using StarbucksClone.Application.UseCases.Command.Orders;
 using StarbucksClone.Application.UseCases.Queries.Orders;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

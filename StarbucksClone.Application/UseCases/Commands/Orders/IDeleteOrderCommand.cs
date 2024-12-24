@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarbucksClone.Application.UseCases.Commands.Orders
+namespace StarbucksClone.Application.UseCases.Command.Orders
 {
     public interface IDeleteOrderCommand : ICommand<int>
     {

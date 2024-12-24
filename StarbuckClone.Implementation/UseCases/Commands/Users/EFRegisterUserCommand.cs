@@ -2,7 +2,7 @@
 using StarbuckClone.Domain;
 using StarbuckClone.Implementation.Validators;
 using StarbucksClone.Application.DTO;
-using StarbucksClone.Application.UseCases.Commands.Users;
+using StarbucksClone.Application.UseCases.Command.Users;
 using StarbucksClone.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -53,6 +53,7 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Users
                     new UserUseCase { UseCaseId = 18},
                     new UserUseCase { UseCaseId = 16},
                     new UserUseCase { UseCaseId = 21},
+                    new UserUseCase { UseCaseId = 26}
                 }
             };
 

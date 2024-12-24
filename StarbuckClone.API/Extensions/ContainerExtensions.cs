@@ -1,22 +1,22 @@
 ﻿using StarbuckClone.Implementation.UseCases.Commands.Users;
 using StarbuckClone.Implementation.Validators;
 using StarbuckClone.Implementation;
-using StarbucksClone.Application.UseCases.Commands.Users;
+using StarbucksClone.Application.UseCases.Command.Users;
 using StarbucksClone.Application;
 using StarbuckClone.Implementation.Logging;
 using StarbuckClone.Implementation.UseCases.Commands.CartLines;
 using StarbuckClone.Implementation.UseCases.Commands.ProductCategories;
 using StarbuckClone.Implementation.UseCases.Commands.Products;
-using StarbucksClone.Application.UseCases.Commands.CartLines;
-using StarbucksClone.Application.UseCases.Commands.ProductCategories;
-using StarbucksClone.Application.UseCases.Commands.Products;
+using StarbucksClone.Application.UseCases.Command.CartLines;
+using StarbucksClone.Application.UseCases.Command.ProductCategories;
+using StarbucksClone.Application.UseCases.Command.Products;
 using StarbuckClone.Implementation.UseCases.Queries.AuditLogs;
 using StarbuckClone.Implementation.UseCases.Queries.ProductCategories;
 using StarbuckClone.Implementation.UseCases.Queries.Users;
 using StarbucksClone.Application.UseCases.Queries.AuditLogs;
 using StarbucksClone.Application.UseCases.Queries.ProductCategories;
 using StarbucksClone.Application.UseCases.Queries.Users;
-using StarbucksClone.Application.UseCases.Commands.Orders;
+using StarbucksClone.Application.UseCases.Command.Orders;
 using StarbuckClone.Implementation.UseCases.Commands.Orders;
 using StarbucksClone.Application.UseCases.Queries.CartLines;
 using StarbuckClone.Implementation.UseCases.Queries.CartLInes;
@@ -59,6 +59,7 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<IModifyUserCommand, EFModifyUserCommand>();
             services.AddTransient<IDeleteProductCategoryCommand, EFDeleteProductCategoryCommand>();
             services.AddTransient<IModifyProductCategoryCommand, EFModifyProductCategoryCommand>();
+            services.AddTransient<IToggleIsFavouriteCommand, EFToggleIsFavouriteCommand>();
 
             services.AddTransient<ISearchAuditLogsQuery, EFSearchAuditLogsQuery>();
             services.AddTransient<ISearchUsersQuery, EFSearchUsersQuery>();

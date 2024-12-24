@@ -1,6 +1,6 @@
 ﻿using StarbuckClone.Domain;
 using StarbucksClone.Application.Exceptions;
-using StarbucksClone.Application.UseCases.Commands.ProductCategories;
+using StarbucksClone.Application.UseCases.Command.ProductCategories;
 using StarbucksClone.DataAccess;
 using System;
 using System.Collections.Generic;

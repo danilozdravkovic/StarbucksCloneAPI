@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StarbucksClone.DataAccess;
 
@@ -11,9 +12,11 @@ using StarbucksClone.DataAccess;
 namespace StarbucksClone.DataAccess.Migrations
 {
     [DbContext(typeof(SCContext))]
-    partial class SCContextModelSnapshot : ModelSnapshot
+    [Migration("20241209192457_PaymentOptionAdeddToOrder")]
+    partial class PaymentOptionAdeddToOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,9 +80,6 @@ namespace StarbucksClone.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsFavourite")
-                        .HasColumnType("bit");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -308,9 +308,6 @@ namespace StarbucksClone.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsFavourite")
                         .HasColumnType("bit");
 
                     b.Property<int>("OrderId")

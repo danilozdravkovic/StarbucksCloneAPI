@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarbucksClone.Application.UseCases.Commands.CartLines
+namespace StarbucksClone.Application.UseCases.Command.CartLines
 {
     public interface IModifyCartLineCommand : ICommand<ModifyCartLineDto>
     {

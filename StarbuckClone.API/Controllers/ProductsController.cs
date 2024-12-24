@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
-using StarbucksClone.Application.UseCases.Commands.Products;
+using StarbucksClone.Application.UseCases.Command.Products;
 using StarbucksClone.Application.UseCases.Queries.Products;
 using System.Reflection.Metadata;
 

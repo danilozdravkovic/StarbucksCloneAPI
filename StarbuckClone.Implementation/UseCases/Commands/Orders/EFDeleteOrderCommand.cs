@@ -1,7 +1,7 @@
 ﻿using StarbuckClone.Domain;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.Exceptions;
-using StarbucksClone.Application.UseCases.Commands.Orders;
+using StarbucksClone.Application.UseCases.Command.Orders;
 using StarbucksClone.DataAccess;
 using System;
 using System.Collections.Generic;

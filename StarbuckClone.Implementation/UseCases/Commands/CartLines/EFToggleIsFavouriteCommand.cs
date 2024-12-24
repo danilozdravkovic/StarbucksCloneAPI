@@ -1,6 +1,4 @@
 ﻿using StarbuckClone.Domain;
-using StarbuckClone.Implementation.Validators;
-using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.Exceptions;
 using StarbucksClone.Application.UseCases.Command.CartLines;
 using StarbucksClone.DataAccess;
@@ -12,32 +10,31 @@ using System.Threading.Tasks;
 
 namespace StarbuckClone.Implementation.UseCases.Commands.CartLines
 {
-    public class EFDeleteCartLineDto : IDeleteCartLineCommand
+    public class EFToggleIsFavouriteCommand : IToggleIsFavouriteCommand
     {
+
         private readonly SCContext _context;
 
-
-        public EFDeleteCartLineDto(SCContext context)
+        public EFToggleIsFavouriteCommand(SCContext context)
         {
             _context = context;
-          
+
 
         }
-        public int Id => 12;
+        public int Id => 26;
 
-        public string Name => "Remove product from cart";
+        public string Name => "Toggle product's is favourite option";
 
         public void Execute(int data)
         {
-            var cartLineForRemoving = _context.CartLines.Find(data);
-            if (cartLineForRemoving == null)
+            var productToToggle = _context.CartLines.Find(data);
+            if (productToToggle == null)
             {
                 throw new NotFoundException(typeof(CartLine).ToString(), data);
             }
 
-            _context.CartLines.Remove(cartLineForRemoving);
+            productToToggle.IsFavourite = !productToToggle.IsFavourite;
             _context.SaveChanges();
-            
         }
     }
 }

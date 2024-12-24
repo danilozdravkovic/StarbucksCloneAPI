@@ -18,6 +18,7 @@ namespace StarbuckClone.Implementation.Profiles
                 .ForMember(x => x.ProductImage, y => y.MapFrom(p=>p.Product.ImageSrc))
                 .ForMember(x => x.ProductName, y => y.MapFrom(p=>p.Product.Name))
                 .ForMember(x => x.ProductSize, y => y.MapFrom(p=>p.SizeVolume))
+                .ForMember(x => x.isFavourite, y => y.MapFrom(p=>p.IsFavourite))
                 .ForMember(x => x.ProductPrice, y => y.MapFrom(p => p.Product.InitialPrice + p.CartLinesAddIns.Sum(cl => cl.AddInPrice)))
                 .ForMember(x=>x.AddIns,y=>y.MapFrom(p=> p.CartLinesAddIns.Select(cl => new GetingAddInForCartDto
                 {

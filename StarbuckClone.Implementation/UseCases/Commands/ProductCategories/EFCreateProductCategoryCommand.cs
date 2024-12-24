@@ -2,7 +2,7 @@
 using StarbuckClone.Domain;
 using StarbuckClone.Implementation.Validators;
 using StarbucksClone.Application.DTO;
-using StarbucksClone.Application.UseCases.Commands.ProductCategories;
+using StarbucksClone.Application.UseCases.Command.ProductCategories;
 using StarbucksClone.DataAccess;
 using System;
 using System.Collections.Generic;

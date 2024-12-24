@@ -13,6 +13,8 @@ namespace StarbuckClone.Domain
         public int ProductId { get; set; }
         public string SizeVolume { get; set; }
 
+        public bool IsFavourite { get; set; }
+
         public virtual User User { get; set; }
         public virtual Product Product { get; set; }
         public virtual ICollection<CartLinesAddIn> CartLinesAddIns { get; set; } = new HashSet<CartLinesAddIn>();

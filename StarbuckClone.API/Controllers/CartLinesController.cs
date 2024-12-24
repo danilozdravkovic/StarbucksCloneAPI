@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
-using StarbucksClone.Application.UseCases.Commands.CartLines;
-using StarbucksClone.Application.UseCases.Commands.Users;
+using StarbucksClone.Application.UseCases.Command.CartLines;
+using StarbucksClone.Application.UseCases.Command.Users;
 using StarbucksClone.Application.UseCases.Queries.CartLines;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -66,6 +66,15 @@ namespace StarbuckClone.API.Controllers
         public IActionResult Delete(int id, [FromServices] IDeleteCartLineCommand command)
         {
             _useCaseHandler.HandleCommand(command, id);
+            return NoContent();
+        }
+
+        [Authorize]
+        [HttpPatch("{id}")]
+        public IActionResult ToggleProductIsFavourite(int id, [FromServices] IToggleIsFavouriteCommand command)
+        {
+            _useCaseHandler.HandleCommand(command, id);
+
             return NoContent();
         }
     }

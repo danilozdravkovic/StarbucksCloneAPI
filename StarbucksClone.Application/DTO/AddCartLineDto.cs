@@ -33,10 +33,9 @@ namespace StarbucksClone.Application.DTO
         public IEnumerable<GetingAddInForCartDto> AddIns { get; set; }
     }
 
-    public class GetingAddInForCartDto
+    public class GetingAddInForCartDto : AddingAddInForCartDto
     {
         public string AddInName { get; set; }
-        public int? Pump { get; set; }
     }
 
     public class ModifyCartLineDto

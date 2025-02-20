@@ -1,4 +1,5 @@
 ﻿using StarbuckClone.Domain;
+using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.Exceptions;
 using StarbucksClone.Application.UseCases.Command.CartLines;
 using StarbucksClone.DataAccess;
@@ -25,16 +26,29 @@ namespace StarbuckClone.Implementation.UseCases.Commands.CartLines
 
         public string Name => "Toggle product's is favourite option";
 
-        public void Execute(int data)
+        public void Execute(ToggleIsFavoriteDto data)
         {
-            var productToToggle = _context.CartLines.Find(data);
-            if (productToToggle == null)
-            {
-                throw new NotFoundException(typeof(CartLine).ToString(), data);
-            }
+            if (data.TableName == "CartLine") {
+                var productToToggle = _context.CartLines.Find(data.ProductId);
+                if (productToToggle == null)
+                {
+                    throw new NotFoundException(typeof(CartLine).ToString(), data.ProductId);
+                }
 
-            productToToggle.IsFavourite = !productToToggle.IsFavourite;
-            _context.SaveChanges();
+                productToToggle.IsFavourite = !productToToggle.IsFavourite;
+                _context.SaveChanges();
+            }
+            else if (data.TableName == "OrderLine")
+            {
+                var productToToggle = _context.OrderLines.Find(data.ProductId);
+                if (productToToggle == null)
+                {
+                    throw new NotFoundException(typeof(OrderLine).ToString(), data.ProductId);
+                }
+
+                productToToggle.IsFavourite = !productToToggle.IsFavourite;
+                _context.SaveChanges();
+            }
         }
     }
 }

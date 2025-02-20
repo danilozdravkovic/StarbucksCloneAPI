@@ -80,10 +80,12 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Orders
                 {
                     ProductId = x.ProductId,
                     SizeVolume = x.SizeVolume,
+                    ProductSizeId= x.SizeId,
                     IsFavourite= x.IsFavourite,
                     OrderLineAddIns = x.CartLinesAddIns.Select(ca => new OrderLineAddIn
                     {
                         OrderLineId = x.Id,
+                        AddInId = ca.AddInId,
                         AddIn = ca.AddIn.Name,
                         Pump = ca.Pump,
                         AddInPrice = ca.AddInPrice

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarbucksClone.Application.UseCases.Command.CartLines
+namespace StarbucksClone.Application.UseCases.Queries.OrderLines
 {
-    public interface IToggleIsFavouriteCommand : ICommand<ToggleIsFavoriteDto>
+    public interface IGetFavouriteProductsQuery : IQuery<PagedResponse<OrderLineDto>, PagedSearchDto>
     {
     }
 }

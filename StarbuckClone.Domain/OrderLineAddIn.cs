@@ -10,6 +10,7 @@ namespace StarbuckClone.Domain
     {
         public int OrderLineId { get; set; }
         public string AddIn { get; set; }
+        public int AddInId { get; set; }
         public int? Pump { get; set; }
         public decimal AddInPrice { get; set; }
 

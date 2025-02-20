@@ -70,10 +70,10 @@ namespace StarbuckClone.API.Controllers
         }
 
         [Authorize]
-        [HttpPatch("{id}")]
-        public IActionResult ToggleProductIsFavourite(int id, [FromServices] IToggleIsFavouriteCommand command)
+        [HttpPatch]
+        public IActionResult ToggleProductIsFavourite([FromBody] ToggleIsFavoriteDto dto, [FromServices] IToggleIsFavouriteCommand command)
         {
-            _useCaseHandler.HandleCommand(command, id);
+            _useCaseHandler.HandleCommand(command, dto);
 
             return NoContent();
         }

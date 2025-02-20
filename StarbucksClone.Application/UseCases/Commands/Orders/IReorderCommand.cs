@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StarbuckClone.Implementation
+namespace StarbucksClone.Application.UseCases.Commands.Orders
 {
-    public class UseCaseInfo
+    public interface IReorderCommand : ICommand<int>
     {
-        public static int MaxUseCaseId => 28;
     }
 }

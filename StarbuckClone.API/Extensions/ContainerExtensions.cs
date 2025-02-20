@@ -24,6 +24,9 @@ using StarbucksClone.Application.UseCases.Queries.Orders;
 using StarbuckClone.Implementation.UseCases.Queries.Orders;
 using StarbucksClone.Application.UseCases.Queries.Products;
 using StarbuckClone.Implementation.UseCases.Queries.Products;
+using StarbucksClone.Application.UseCases.Queries.OrderLines;
+using StarbuckClone.Implementation.UseCases.Queries.OrderLines;
+using StarbucksClone.Application.UseCases.Commands.Orders;
 
 namespace StarbuckClone.API.Extensions
 {
@@ -60,6 +63,7 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<IDeleteProductCategoryCommand, EFDeleteProductCategoryCommand>();
             services.AddTransient<IModifyProductCategoryCommand, EFModifyProductCategoryCommand>();
             services.AddTransient<IToggleIsFavouriteCommand, EFToggleIsFavouriteCommand>();
+            services.AddTransient<IReorderCommand, EFReorderCommand>();
 
             services.AddTransient<ISearchAuditLogsQuery, EFSearchAuditLogsQuery>();
             services.AddTransient<ISearchUsersQuery, EFSearchUsersQuery>();
@@ -71,9 +75,7 @@ namespace StarbuckClone.API.Extensions
             services.AddTransient<IGetProductQuery, EFGetProductQuery>();
             services.AddTransient<IGetUserQuery, EFGetUserQuery>();
             services.AddTransient<IGetProductCategoryQuery, EFGetProductCategoryQuery>();
-
-
-
+            services.AddTransient<IGetFavouriteProductsQuery,EFGetFavouriteProductsQuery>();
         }
     }
 }

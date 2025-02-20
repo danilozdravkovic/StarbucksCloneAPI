@@ -4,6 +4,7 @@ using StarbuckClone.Implementation;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Command.CartLines;
 using StarbucksClone.Application.UseCases.Command.Orders;
+using StarbucksClone.Application.UseCases.Commands.Orders;
 using StarbucksClone.Application.UseCases.Queries.Orders;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -51,6 +52,14 @@ namespace StarbuckClone.API.Controllers
             
             _useCaseHandler.HandleCommand(command, id);
             return NoContent();
+        }
+
+        [Authorize]
+        [HttpPost("{id}")]
+        public IActionResult Reorder(int id, [FromServices] IReorderCommand command)
+        {
+            _useCaseHandler.HandleCommand(command, id);
+            return StatusCode(201);
         }
     }
 }

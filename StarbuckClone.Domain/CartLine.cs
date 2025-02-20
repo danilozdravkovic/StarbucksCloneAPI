@@ -12,6 +12,7 @@ namespace StarbuckClone.Domain
         public int UserId { get; set; }
         public int ProductId { get; set; }
         public string SizeVolume { get; set; }
+        public int SizeId { get; set; }
 
         public bool IsFavourite { get; set; }
 

@@ -35,6 +35,7 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Orders
                                     .Include(o => o.OrderLines)
                                         .ThenInclude(ol => ol.Product)
                                     .Include(o=>o.User).Where(o=>o.IsActive)
+                                    .OrderByDescending(o=>o.CreatedAt)
                                     .AsQueryable();
 
             if (!string.IsNullOrEmpty(search.Username))

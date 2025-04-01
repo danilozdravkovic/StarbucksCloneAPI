@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StarbuckClone.Domain;
 using StarbuckClone.Implementation.Extensions;
+using StarbucksClone.Application;
 using StarbucksClone.Application.DTO;
 using StarbucksClone.Application.UseCases.Queries.Orders;
 using StarbucksClone.DataAccess;
@@ -15,13 +16,15 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Orders
 {
     public class EFSearchOrdersQuery : ISearchOrdersQuery
     {
-        public readonly SCContext _context;
-        public readonly IMapper _mapper;
+        private readonly SCContext _context;
+        private readonly IMapper _mapper;
+        private readonly IApplicationActor _user;
 
-        public EFSearchOrdersQuery(SCContext context, IMapper mapper)
+        public EFSearchOrdersQuery(SCContext context, IMapper mapper, IApplicationActor user)
         {
             _context = context;
             _mapper = mapper;
+            _user = user;
         }
         public int Id => 14;
 
@@ -37,6 +40,11 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Orders
                                     .Include(o=>o.User).Where(o=>o.IsActive)
                                     .OrderByDescending(o=>o.CreatedAt)
                                     .AsQueryable();
+
+            if( _user.RoleId!=1 || search.IsForUserOnly)
+            {
+                query = query.Where(x => x.UserId == _user.Id);
+            }
 
             if (!string.IsNullOrEmpty(search.Username))
             {
@@ -57,7 +65,6 @@ namespace StarbuckClone.Implementation.UseCases.Queries.Orders
             {
                 query = query.Where(x => x.CreatedAt < search.DateTo);
             }
-
 
             return query.AddPagination<Order,OrderDto>(search.Page, search.PerPage, _mapper) ;
         }

@@ -24,12 +24,13 @@ namespace StarbucksClone.Application.DTO
         public string Email { get; set; }
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
+        public bool IsForUserOnly { get; set; }
     }
 
     public class OrderDto
     {
         public int OrderId { get; set;}
-        public string UserUserName { get; set; }
+        public string UserName { get; set; }
         public string UserEmail { get; set; }
 
         public IEnumerable<OrderProductDto> Products { get; set; }
@@ -39,7 +40,7 @@ namespace StarbucksClone.Application.DTO
 
         public decimal TotalPrice { get; set; }
 
-
+        public string PaymentOption { get; set; }
     }
 
     public class OrderProductDto

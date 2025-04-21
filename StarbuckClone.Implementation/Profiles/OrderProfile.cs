@@ -16,7 +16,7 @@ namespace StarbuckClone.Implementation.Profiles
         {
             CreateMap<Order, OrderDto>()
                 .ForMember(x => x.OrderId, y => y.MapFrom(p => p.Id))
-                .ForMember(x => x.UserName, y => y.MapFrom(p => p.User.Username+" "+p.User.LastName))
+                .ForMember(x => x.UserName, y => y.MapFrom(p => p.User.FirstName+" "+p.User.LastName))
                 .ForMember(x => x.UserEmail, y => y.MapFrom(p => p.User.Email))
                 .ForMember(x => x.PaymentOption,y => y.MapFrom(p=> p.PaymentOption))
                 .ForMember(x => x.Products, y => y.MapFrom(p => p.OrderLines.Select(o => new OrderProductDto

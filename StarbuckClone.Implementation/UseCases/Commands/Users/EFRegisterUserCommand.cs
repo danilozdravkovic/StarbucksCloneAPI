@@ -53,7 +53,9 @@ namespace StarbuckClone.Implementation.UseCases.Commands.Users
                     new UserUseCase { UseCaseId = 18},
                     new UserUseCase { UseCaseId = 16},
                     new UserUseCase { UseCaseId = 21},
-                    new UserUseCase { UseCaseId = 26}
+                    new UserUseCase { UseCaseId = 26},
+                    new UserUseCase { UseCaseId = 27},
+                    new UserUseCase { UseCaseId = 28},
                 }
             };
 

@@ -21,7 +21,7 @@ namespace StarbuckClone.Implementation.Validators
             RuleFor(x => x.ProductId).NotEmpty().WithMessage("Product id is required.")
                 .Must(x => context.Products.Any(p => p.Id == x && p.IsActive)).WithMessage("Product with given id does not exist.");
 
-            RuleFor(x => x.SizeId).SizeIdMustBeValid(_context);
+            RuleFor(x => x.SizeId).SizeIdMustBeValid(_context).When(x => x.SizeId !=0);
 
             RuleForEach(x => x.AddIns).AddInsMustBeValid(_context);
 

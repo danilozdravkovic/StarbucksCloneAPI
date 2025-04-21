@@ -38,9 +38,8 @@ namespace StarbuckClone.Implementation.UseCases.Commands.CartLines
             {
                 UserId = _actor.Id,
                 ProductId = data.ProductId,
-                SizeVolume = _context.Sizes.Where(s => s.Id == data.SizeId).FirstOrDefault().Name,
-                SizeId = data.SizeId,
-               
+                SizeVolume = data.SizeId==0 ? "" : _context.Sizes.Where(s => s.Id == data.SizeId).FirstOrDefault().Name,
+                SizeId = data.SizeId==0 ? null : data.SizeId,
                 CartLinesAddIns = data.AddIns.Select(a => new CartLinesAddIn
                 {
                     AddInId= a.Id,
